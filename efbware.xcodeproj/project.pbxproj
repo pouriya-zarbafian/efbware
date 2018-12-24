@@ -8,12 +8,19 @@
 
 /* Begin PBXBuildFile section */
 		A631812921D1720C00D06532 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A631812821D1720C00D06532 /* AppDelegate.swift */; };
-		A631812B21D1720C00D06532 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A631812A21D1720C00D06532 /* ViewController.swift */; };
+		A631812B21D1720C00D06532 /* RootController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A631812A21D1720C00D06532 /* RootController.swift */; };
 		A631812E21D1720C00D06532 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A631812C21D1720C00D06532 /* Main.storyboard */; };
 		A631813121D1720C00D06532 /* efbware.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = A631812F21D1720C00D06532 /* efbware.xcdatamodeld */; };
 		A631813321D1720E00D06532 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A631813221D1720E00D06532 /* Assets.xcassets */; };
 		A631813621D1720E00D06532 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A631813421D1720E00D06532 /* LaunchScreen.storyboard */; };
 		A631814121D1720E00D06532 /* efbwareTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A631814021D1720E00D06532 /* efbwareTests.swift */; };
+		A631815021D1749100D06532 /* Logger.swift in Sources */ = {isa = PBXBuildFile; fileRef = A631814E21D1749100D06532 /* Logger.swift */; };
+		A631815121D1749100D06532 /* FileSystemService.swift in Sources */ = {isa = PBXBuildFile; fileRef = A631814F21D1749100D06532 /* FileSystemService.swift */; };
+		A631815321D1751700D06532 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = A631815221D1751700D06532 /* Constants.swift */; };
+		A631815621D1765A00D06532 /* LoginController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A631815521D1765A00D06532 /* LoginController.swift */; };
+		A631815821D1767A00D06532 /* DocumentsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A631815721D1767A00D06532 /* DocumentsViewController.swift */; };
+		A631815A21D1769100D06532 /* TechlogViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A631815921D1769100D06532 /* TechlogViewController.swift */; };
+		A631815C21D176A200D06532 /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A631815B21D176A200D06532 /* SettingsViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -29,7 +36,7 @@
 /* Begin PBXFileReference section */
 		A631812521D1720C00D06532 /* efbware.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = efbware.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A631812821D1720C00D06532 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		A631812A21D1720C00D06532 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		A631812A21D1720C00D06532 /* RootController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootController.swift; sourceTree = "<group>"; };
 		A631812D21D1720C00D06532 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		A631813021D1720C00D06532 /* efbware.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = efbware.xcdatamodel; sourceTree = "<group>"; };
 		A631813221D1720E00D06532 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -38,6 +45,13 @@
 		A631813C21D1720E00D06532 /* efbwareTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = efbwareTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		A631814021D1720E00D06532 /* efbwareTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = efbwareTests.swift; sourceTree = "<group>"; };
 		A631814221D1720E00D06532 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		A631814E21D1749100D06532 /* Logger.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Logger.swift; sourceTree = "<group>"; };
+		A631814F21D1749100D06532 /* FileSystemService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FileSystemService.swift; sourceTree = "<group>"; };
+		A631815221D1751700D06532 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
+		A631815521D1765A00D06532 /* LoginController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginController.swift; sourceTree = "<group>"; };
+		A631815721D1767A00D06532 /* DocumentsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DocumentsViewController.swift; sourceTree = "<group>"; };
+		A631815921D1769100D06532 /* TechlogViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TechlogViewController.swift; sourceTree = "<group>"; };
+		A631815B21D176A200D06532 /* SettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -61,6 +75,8 @@
 		A631811C21D1720C00D06532 = {
 			isa = PBXGroup;
 			children = (
+				A631815421D1764900D06532 /* Controllers */,
+				A631814D21D1747E00D06532 /* Util */,
 				A631812721D1720C00D06532 /* efbware */,
 				A631813F21D1720E00D06532 /* efbwareTests */,
 				A631812621D1720C00D06532 /* Products */,
@@ -80,7 +96,7 @@
 			isa = PBXGroup;
 			children = (
 				A631812821D1720C00D06532 /* AppDelegate.swift */,
-				A631812A21D1720C00D06532 /* ViewController.swift */,
+				A631812A21D1720C00D06532 /* RootController.swift */,
 				A631812C21D1720C00D06532 /* Main.storyboard */,
 				A631813221D1720E00D06532 /* Assets.xcassets */,
 				A631813421D1720E00D06532 /* LaunchScreen.storyboard */,
@@ -97,6 +113,27 @@
 				A631814221D1720E00D06532 /* Info.plist */,
 			);
 			path = efbwareTests;
+			sourceTree = "<group>";
+		};
+		A631814D21D1747E00D06532 /* Util */ = {
+			isa = PBXGroup;
+			children = (
+				A631814F21D1749100D06532 /* FileSystemService.swift */,
+				A631814E21D1749100D06532 /* Logger.swift */,
+				A631815221D1751700D06532 /* Constants.swift */,
+			);
+			path = Util;
+			sourceTree = "<group>";
+		};
+		A631815421D1764900D06532 /* Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				A631815521D1765A00D06532 /* LoginController.swift */,
+				A631815721D1767A00D06532 /* DocumentsViewController.swift */,
+				A631815921D1769100D06532 /* TechlogViewController.swift */,
+				A631815B21D176A200D06532 /* SettingsViewController.swift */,
+			);
+			path = Controllers;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -201,8 +238,15 @@
 			buildActionMask = 2147483647;
 			files = (
 				A631813121D1720C00D06532 /* efbware.xcdatamodeld in Sources */,
-				A631812B21D1720C00D06532 /* ViewController.swift in Sources */,
+				A631815821D1767A00D06532 /* DocumentsViewController.swift in Sources */,
+				A631812B21D1720C00D06532 /* RootController.swift in Sources */,
+				A631815C21D176A200D06532 /* SettingsViewController.swift in Sources */,
+				A631815121D1749100D06532 /* FileSystemService.swift in Sources */,
 				A631812921D1720C00D06532 /* AppDelegate.swift in Sources */,
+				A631815A21D1769100D06532 /* TechlogViewController.swift in Sources */,
+				A631815021D1749100D06532 /* Logger.swift in Sources */,
+				A631815321D1751700D06532 /* Constants.swift in Sources */,
+				A631815621D1765A00D06532 /* LoginController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
