@@ -21,6 +21,15 @@
 		A631815821D1767A00D06532 /* DocumentsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A631815721D1767A00D06532 /* DocumentsViewController.swift */; };
 		A631815A21D1769100D06532 /* TechlogViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A631815921D1769100D06532 /* TechlogViewController.swift */; };
 		A631815C21D176A200D06532 /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A631815B21D176A200D06532 /* SettingsViewController.swift */; };
+		A631816421D17E7800D06532 /* Parser.swift in Sources */ = {isa = PBXBuildFile; fileRef = A631815E21D17E7800D06532 /* Parser.swift */; };
+		A631816521D17E7800D06532 /* Element.swift in Sources */ = {isa = PBXBuildFile; fileRef = A631815F21D17E7800D06532 /* Element.swift */; };
+		A631816621D17E7800D06532 /* Document.swift in Sources */ = {isa = PBXBuildFile; fileRef = A631816021D17E7800D06532 /* Document.swift */; };
+		A631816721D17E7800D06532 /* Error.swift in Sources */ = {isa = PBXBuildFile; fileRef = A631816121D17E7800D06532 /* Error.swift */; };
+		A631816821D17E7800D06532 /* Options.swift in Sources */ = {isa = PBXBuildFile; fileRef = A631816321D17E7800D06532 /* Options.swift */; };
+		A631816B21D17EE900D06532 /* LoginService.swift in Sources */ = {isa = PBXBuildFile; fileRef = A631816A21D17EE900D06532 /* LoginService.swift */; };
+		A631816E21D180A400D06532 /* LoginData.swift in Sources */ = {isa = PBXBuildFile; fileRef = A631816D21D180A400D06532 /* LoginData.swift */; };
+		A631817021D1842300D06532 /* DokaService.swift in Sources */ = {isa = PBXBuildFile; fileRef = A631816F21D1842300D06532 /* DokaService.swift */; };
+		A631817321D1851400D06532 /* LoginRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = A631817221D1851400D06532 /* LoginRequest.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -52,6 +61,16 @@
 		A631815721D1767A00D06532 /* DocumentsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DocumentsViewController.swift; sourceTree = "<group>"; };
 		A631815921D1769100D06532 /* TechlogViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TechlogViewController.swift; sourceTree = "<group>"; };
 		A631815B21D176A200D06532 /* SettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
+		A631815E21D17E7800D06532 /* Parser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Parser.swift; sourceTree = "<group>"; };
+		A631815F21D17E7800D06532 /* Element.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Element.swift; sourceTree = "<group>"; };
+		A631816021D17E7800D06532 /* Document.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Document.swift; sourceTree = "<group>"; };
+		A631816121D17E7800D06532 /* Error.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Error.swift; sourceTree = "<group>"; };
+		A631816221D17E7800D06532 /* mrxml.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = mrxml.h; sourceTree = "<group>"; };
+		A631816321D17E7800D06532 /* Options.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Options.swift; sourceTree = "<group>"; };
+		A631816A21D17EE900D06532 /* LoginService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginService.swift; sourceTree = "<group>"; };
+		A631816D21D180A400D06532 /* LoginData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginData.swift; sourceTree = "<group>"; };
+		A631816F21D1842300D06532 /* DokaService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DokaService.swift; sourceTree = "<group>"; };
+		A631817221D1851400D06532 /* LoginRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginRequest.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -75,6 +94,10 @@
 		A631811C21D1720C00D06532 = {
 			isa = PBXGroup;
 			children = (
+				A631817121D1850400D06532 /* Xml */,
+				A631816C21D1809A00D06532 /* Data */,
+				A631816921D17E9F00D06532 /* Service */,
+				A631815D21D17E5E00D06532 /* Lib */,
 				A631815421D1764900D06532 /* Controllers */,
 				A631814D21D1747E00D06532 /* Util */,
 				A631812721D1720C00D06532 /* efbware */,
@@ -134,6 +157,44 @@
 				A631815B21D176A200D06532 /* SettingsViewController.swift */,
 			);
 			path = Controllers;
+			sourceTree = "<group>";
+		};
+		A631815D21D17E5E00D06532 /* Lib */ = {
+			isa = PBXGroup;
+			children = (
+				A631816021D17E7800D06532 /* Document.swift */,
+				A631815F21D17E7800D06532 /* Element.swift */,
+				A631816121D17E7800D06532 /* Error.swift */,
+				A631816221D17E7800D06532 /* mrxml.h */,
+				A631816321D17E7800D06532 /* Options.swift */,
+				A631815E21D17E7800D06532 /* Parser.swift */,
+			);
+			path = Lib;
+			sourceTree = "<group>";
+		};
+		A631816921D17E9F00D06532 /* Service */ = {
+			isa = PBXGroup;
+			children = (
+				A631816A21D17EE900D06532 /* LoginService.swift */,
+				A631816F21D1842300D06532 /* DokaService.swift */,
+			);
+			path = Service;
+			sourceTree = "<group>";
+		};
+		A631816C21D1809A00D06532 /* Data */ = {
+			isa = PBXGroup;
+			children = (
+				A631816D21D180A400D06532 /* LoginData.swift */,
+			);
+			path = Data;
+			sourceTree = "<group>";
+		};
+		A631817121D1850400D06532 /* Xml */ = {
+			isa = PBXGroup;
+			children = (
+				A631817221D1851400D06532 /* LoginRequest.swift */,
+			);
+			path = Xml;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -238,14 +299,23 @@
 			buildActionMask = 2147483647;
 			files = (
 				A631813121D1720C00D06532 /* efbware.xcdatamodeld in Sources */,
+				A631816421D17E7800D06532 /* Parser.swift in Sources */,
+				A631817321D1851400D06532 /* LoginRequest.swift in Sources */,
+				A631816E21D180A400D06532 /* LoginData.swift in Sources */,
+				A631816521D17E7800D06532 /* Element.swift in Sources */,
 				A631815821D1767A00D06532 /* DocumentsViewController.swift in Sources */,
 				A631812B21D1720C00D06532 /* RootController.swift in Sources */,
+				A631817021D1842300D06532 /* DokaService.swift in Sources */,
 				A631815C21D176A200D06532 /* SettingsViewController.swift in Sources */,
 				A631815121D1749100D06532 /* FileSystemService.swift in Sources */,
+				A631816B21D17EE900D06532 /* LoginService.swift in Sources */,
 				A631812921D1720C00D06532 /* AppDelegate.swift in Sources */,
 				A631815A21D1769100D06532 /* TechlogViewController.swift in Sources */,
+				A631816621D17E7800D06532 /* Document.swift in Sources */,
 				A631815021D1749100D06532 /* Logger.swift in Sources */,
 				A631815321D1751700D06532 /* Constants.swift in Sources */,
+				A631816721D17E7800D06532 /* Error.swift in Sources */,
+				A631816821D17E7800D06532 /* Options.swift in Sources */,
 				A631815621D1765A00D06532 /* LoginController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

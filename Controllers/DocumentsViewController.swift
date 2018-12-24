@@ -10,4 +10,8 @@ import UIKit
 
 class DocumentsViewController: UIViewController {
 
+    @IBAction func testButton(_ sender: UIButton) {
+        
+        print("testButton, sid=\(LoginController.sid)")
+    }
 }
