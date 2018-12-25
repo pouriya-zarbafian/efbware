@@ -10,24 +10,27 @@ import UIKit
 
 class DocumentsViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
 
+    private let LOGGER = Logger.getInstance()
+    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return self.documents.count;
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
-        let cell:UITableViewCell = tableView.dequeueReusableCell(withIdentifier: "reuseIdentifier")!
+        let cell:UITableViewCell = tableView.dequeueReusableCell(withIdentifier: "cell")!
         
         cell.textLabel?.text = self.documents[indexPath.row].label
         
         return cell
     }
     
-    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        LOGGER.debug(msg: "You selected cell #\(indexPath.row)!")
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        LOGGER.debug(msg: "You selected cell #\(indexPath.row)")
+        if let cell = tableView.cellForRow(at: indexPath) {
+            LOGGER.debug(msg: "label=\(String(describing: cell.textLabel))")
+        }
     }
-    
-    private let LOGGER = Logger.getInstance()
     
     private var documents = [DocumentData]()
     
@@ -40,10 +43,9 @@ class DocumentsViewController: UIViewController, UITableViewDelegate, UITableVie
         super.viewDidLoad()
         LOGGER.debug(msg: "DocumentsViewController.viewDidLoad")
         
-        // TODO
-        tableView.register(UITableViewCell.self, forCellReuseIdentifier: "reuseIdentifier")
         tableView.dataSource = self
         tableView.delegate = self
+        tableView.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
         
         let dokaService = DokaService(sid: LoginController.sid)
         
