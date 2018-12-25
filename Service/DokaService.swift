@@ -20,7 +20,7 @@ class DokaService: NSObject {
         self.sid = sid
     }
     
-    func getDocuments() {
+    func getDocuments(onResult: @escaping (Array<DocumentData>) -> (Void)) {
         
         let docReq = DocumentRequest()
         
@@ -33,6 +33,10 @@ class DokaService: NSObject {
             let xml = $1
             
             self.LOGGER.error(msg: "documents retrieved, xml=\n\(xml)")
+            
+            let docs = XmlUtils.parseSearchResult(xml: xml)
+            
+            onResult(docs)
         }
         
         let errorClosure: () -> Void = {

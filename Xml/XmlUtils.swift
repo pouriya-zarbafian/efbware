@@ -10,6 +10,8 @@ import UIKit
 
 class XmlUtils: NSObject {
 
+    private static let LOGGER = Logger.getInstance()
+    
     static func addContext(req: AEXMLElement) {
         
         let language = AEXMLElement(name: "language", value: "ENG")
@@ -33,5 +35,38 @@ class XmlUtils: NSObject {
         context.addChild(pageNumberXml)
         context.addChild(pageSizeXml)
         context.addChild(viewRestrictedXml)
+    }
+    
+    static func parseSearchResult(xml: String) -> Array<DocumentData> {
+        
+        let nsdata = xml.data(using: .utf8)
+    
+        var doc: AEXMLDocument
+        
+        var documents = Array<DocumentData>()
+        
+        do {
+            try doc = AEXMLDocument(xml: nsdata!)
+            
+            // parse known structure
+            for item in doc["response"]["items"]["item"].all! {
+                
+                let docLabel = item["label"].string
+                let docId = item["id"].string
+                let fileRef = item["files"]["file"]["fileRef"].string
+                let totalPart = item["files"]["file"]["totalPart"].string
+                
+                let documentData = DocumentData(label: docLabel, docId: docId, fileRef: fileRef, parts: Int(totalPart)!)
+                
+                LOGGER.info(msg: "parsed document, label=\(documentData.label), docId=\(documentData.docId), fileRef=\(documentData.fileRef), totalPart=\(documentData.parts)")
+                
+                documents.append(documentData)
+            }
+        }
+        catch let error as NSError {
+            print("Error while parsing xml\n\(xml)\nerror=\(error.localizedDescription)")
+        }
+        
+        return documents
     }
 }

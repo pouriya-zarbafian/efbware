@@ -33,6 +33,7 @@
 		A631817721D1A26700D06532 /* XmlUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = A631817621D1A26700D06532 /* XmlUtils.swift */; };
 		A631817921D1A31300D06532 /* DocumentRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = A631817821D1A31300D06532 /* DocumentRequest.swift */; };
 		A631817B21D1A34000D06532 /* DocumentRequestData.swift in Sources */ = {isa = PBXBuildFile; fileRef = A631817A21D1A34000D06532 /* DocumentRequestData.swift */; };
+		A631817D21D1B2E100D06532 /* DocumentData.swift in Sources */ = {isa = PBXBuildFile; fileRef = A631817C21D1B2E100D06532 /* DocumentData.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -77,6 +78,7 @@
 		A631817621D1A26700D06532 /* XmlUtils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = XmlUtils.swift; sourceTree = "<group>"; };
 		A631817821D1A31300D06532 /* DocumentRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DocumentRequest.swift; sourceTree = "<group>"; };
 		A631817A21D1A34000D06532 /* DocumentRequestData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DocumentRequestData.swift; sourceTree = "<group>"; };
+		A631817C21D1B2E100D06532 /* DocumentData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DocumentData.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -192,6 +194,7 @@
 			children = (
 				A631816D21D180A400D06532 /* LoginData.swift */,
 				A631817A21D1A34000D06532 /* DocumentRequestData.swift */,
+				A631817C21D1B2E100D06532 /* DocumentData.swift */,
 			);
 			path = Data;
 			sourceTree = "<group>";
@@ -319,6 +322,7 @@
 				A631817521D1978200D06532 /* HttpService.swift in Sources */,
 				A631815121D1749100D06532 /* FileSystemService.swift in Sources */,
 				A631812921D1720C00D06532 /* AppDelegate.swift in Sources */,
+				A631817D21D1B2E100D06532 /* DocumentData.swift in Sources */,
 				A631815A21D1769100D06532 /* TechlogViewController.swift in Sources */,
 				A631816621D17E7800D06532 /* Document.swift in Sources */,
 				A631817B21D1A34000D06532 /* DocumentRequestData.swift in Sources */,
