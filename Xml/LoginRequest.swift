@@ -14,16 +14,8 @@ class LoginRequest {
         
         let xmlDoc = AEXMLDocument()
         let req = xmlDoc.addChild(name: "request")
-        //let header = xml.addChild(name: "header")
-        //header.addChild(name: "type", value: "mrtd-result")
-        //let body = xml.addChild(name: "payload")
         
-        let language = AEXMLElement(name: "language", value: "ENG")
-        let timeZone = AEXMLElement(name: "timeZone", value: "UTC")
-        
-        let context = req.addChild(name: "context")
-        context.addChild(language)
-        context.addChild(timeZone)
+        XmlUtils.addContext(req: req)
         
         req.addChild(name: "customerName", value: loginData.customerName)
         req.addChild(name: "user", value: loginData.user)

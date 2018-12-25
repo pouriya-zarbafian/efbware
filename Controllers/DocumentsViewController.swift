@@ -10,8 +10,16 @@ import UIKit
 
 class DocumentsViewController: UIViewController {
 
-    @IBAction func testButton(_ sender: UIButton) {
+    private let LOGGER = Logger.getInstance()
+    
+    //private var dokaService: DokaService
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        LOGGER.debug(msg: "DocumentsViewController.viewDidLoad")
         
-        print("testButton, sid=\(LoginController.sid)")
+        let dokaService = DokaService(sid: LoginController.sid)
+        
+        dokaService.getDocuments()
     }
 }

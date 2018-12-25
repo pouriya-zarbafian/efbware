@@ -16,6 +16,8 @@ class LoginController: UIViewController {
     
     static var sid = ""
     
+    var httpService = HttpService()
+    
     // MARK: UI
     @IBOutlet weak var loginInput: UITextField!
     @IBOutlet weak var passwordInput: UITextField!
@@ -34,40 +36,19 @@ class LoginController: UIViewController {
             let xml = LoginRequest.toXml(loginData: loginData)
             print("XML\n\(xml)")
             
-            attemptLogin(url: Constants.URL_LOGIN, xml: xml)
-        }
-        /*
-        
-        
-        let httpClient = HttpClient()
-        httpClient.sendResult(url: HttpClient.LOGIN_URL, xml: xml)
-        //httpClient.sendResult(url: HttpClient.LOGOUT_URL, xml: "")
-         */
-    }
-    
-    // MARK: Methods
-    func attemptLogin(url: String, xml: String) {
-        
-        let url = URL(string: url)!
-        var request = URLRequest(url: url)
-        request.setValue("application/xml", forHTTPHeaderField: "Content-Type")
-        
-        request.httpMethod = "POST"
-        
-        print("host=\(request.url?.host)")
-        
-        request.httpBody = xml.data(using: .utf8)
-        let task = URLSession.shared.dataTask(with: request) { data, response, error in
-            guard let data = data, error == nil else {                                                 // check for fundamental networking error
-                print("error=\(error)")
-                return
+            let successClosure: (HTTPURLResponse, String) -> Void = {
+                let sid = $0.allHeaderFields[Constants.HEADER_SESSION_ID] as! String
+                _ = $1
+                self.LOGGER.info(msg: "Login successful, sid=\(sid)")
+                LoginController.sid = sid
+                RootController.loggedIn = true
+                DispatchQueue.main.async {
+                    self.dismiss(animated: false, completion: nil)
+                }
             }
             
-            if let httpStatus = response as? HTTPURLResponse, httpStatus.statusCode != 200 {           // check for http errors
-                print("statusCode should be 200, but is \(httpStatus.statusCode)")
-                print("response = \(response)")
+            let errorClosure: () -> Void = {
                 
-                // create the alert
                 let alert = UIAlertController(title: "Login Error", message: "Login or username is incorrect", preferredStyle: UIAlertController.Style.alert)
                 
                 // add an action (button)
@@ -77,28 +58,9 @@ class LoginController: UIViewController {
                 DispatchQueue.main.async {
                     self.present(alert, animated: true, completion: nil)
                 }
-                
-                return
             }
             
-            let responseString = String(data: data, encoding: .utf8)
-            print("responseString = \(responseString)")
-            
-            let httpResponse = response as? HTTPURLResponse
-            let sid = httpResponse?.allHeaderFields["app-session-id"] as! String
-            
-            LoginController.sid = sid
-            print("Login successful, sid=\(sid)")
-            
-            RootController.loggedIn = true
-            
-            DispatchQueue.main.async {
-                self.dismiss(animated: false, completion: nil)
-            }
-            
+            httpService.post(url: Constants.URL_LOGIN, xml: xml, onSuccess: successClosure, onError: errorClosure)
         }
-        task.resume()
-        
-        // TODO: return task
     }
 }

@@ -10,4 +10,36 @@ import UIKit
 
 class DokaService: NSObject {
 
+    private let LOGGER = Logger.getInstance()
+    
+    var sid: String
+    
+    var httpService = HttpService()
+    
+    init(sid: String) {
+        self.sid = sid
+    }
+    
+    func getDocuments() {
+        
+        let docReq = DocumentRequest()
+        
+        let xml = docReq.toXml()
+        
+        LOGGER.debug(msg: "XML\n\(xml)")
+        
+        let successClosure: (HTTPURLResponse, String) -> Void = {
+ 
+            let xml = $1
+            
+            self.LOGGER.error(msg: "documents retrieved, xml=\n\(xml)")
+        }
+        
+        let errorClosure: () -> Void = {
+            
+            self.LOGGER.error(msg: "error while retrieving documents")
+        }
+        
+        httpService.post(url: Constants.URL_ITEM_SEARCH , xml: xml, onSuccess: successClosure, onError: errorClosure)
+    }
 }
