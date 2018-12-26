@@ -55,13 +55,30 @@ class DocumentsViewController: UIViewController, UITableViewDelegate, UITableVie
             
             self.documents.removeAll()
             
+            // list of docs from server
             for documentData in $0 {
                 self.documents.append(documentData)
                 
                 self.LOGGER.info(msg: "added document, label=\(documentData.label), docId=\(documentData.docId), fileRef=\(documentData.fileRef), totalPart=\(documentData.parts)")
+                
+                
+                
             }
             
-            self.LOGGER.debug(msg: "documents.count=\(self.documents.count)")
+            self.LOGGER.debug(msg: "server documents.count=\(self.documents.count)")
+            
+            // list of docs in database
+            let dbList = DatabaseService.getInstance().listDocuments()
+            
+            // compare
+            let newDocs = self.findNewDocuments(serverList: self.documents, dbList: dbList)
+            
+            // add new docs
+            for newDoc in newDocs {
+                newDoc.status = DocumentStatus.NEW
+                // TODO
+                _ = DatabaseService.getInstance().insertDocument(document: newDoc)
+            }
 
             DispatchQueue.main.async{
                 self.tableView.reloadData()
@@ -69,5 +86,36 @@ class DocumentsViewController: UIViewController, UITableViewDelegate, UITableVie
         }
  
         dokaService.getDocuments(onResult: onResult)
+    }
+    
+    func findNewDocuments(serverList: Array<DocumentData>, dbList: Array<DocumentData>) -> Array<DocumentData> {
+        
+        var newDocs: Array<DocumentData> = []
+        
+        var localDic: [String:DocumentData] = [:]
+        
+        for doc in dbList {
+            let key = buildKey(doc: doc)
+            localDic[key] = doc
+        }
+        
+        for doc in serverList {
+            let key = buildKey(doc: doc)
+            if (localDic[key] != nil) {
+                LOGGER.debug(msg: "key existed: \(key)")
+            }
+            else {
+                LOGGER.debug(msg: "new key: \(key)")
+                newDocs.append(doc)
+            }
+        }
+        
+        return newDocs
+    }
+    
+    private func buildKey(doc: DocumentData) -> String {
+        
+        let key = doc.docId + "_" + doc.fileRef
+        return key
     }
 }

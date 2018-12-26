@@ -32,7 +32,7 @@ class FileSystemService {
         
         LOGGER.debug(msg: "documentsUrl=\(documentsUrl)")
         
-        appDirUrl = documentsUrl.appendingPathComponent(Constants.DIR_APPLICATION)
+        appDirUrl = documentsUrl.appendingPathComponent(Constants.DIR_APPLICATION, isDirectory: true)
         
         if(existDir(dir: appDirUrl.path)) {
             LOGGER.info(msg: "app dir found")

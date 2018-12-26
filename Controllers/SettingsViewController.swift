@@ -85,7 +85,12 @@ class SettingsViewController: UIViewController {
         
         LOGGER.debug(msg: "databaseDirectory=\(docsUrl.path)")
         
-        _ = DatabaseService(dataDir: docsUrl.path)
+        // query
+        let documents = DatabaseService.getInstance().listDocuments()
+        for doc in documents {
+            LOGGER.debug(msg: "found document, id=\(doc.id), label=\(doc.label), docId=\(doc.docId), fileRef=\(doc.fileRef), parts=\(doc.parts), status=\(doc.status)")
+        }
+        
     }
     
     @IBAction func deleteDatabaseFileButton(_ sender: UIButton) {

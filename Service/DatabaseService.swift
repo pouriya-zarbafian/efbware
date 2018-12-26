@@ -11,16 +11,30 @@ import SQLite3
 
 class DatabaseService: NSObject {
     
+    static private let instance: DatabaseService = {
+       let dbService = DatabaseService()
+        return dbService
+    }()
+    
     private let LOGGER = Logger.getInstance()
     
     private var fileSystemService = FileSystemService.getInstance()
     
     var dbDirUrl: URL
+    var dbFileUrl: URL
     //var db: OpaquePointer
     
-    init(dataDir: String) {
+    static func getInstance() -> DatabaseService {
+        return instance
+    }
+    
+    override private init() {
         
-        dbDirUrl = URL(fileURLWithPath: dataDir, isDirectory: true)
+        var appDbUrl = URL(fileURLWithPath: fileSystemService.appDirUrl.path, isDirectory: true)
+        appDbUrl.appendPathComponent(Constants.DIR_DATABASE)
+        
+        dbDirUrl = appDbUrl
+        dbFileUrl = dbDirUrl.appendingPathComponent(Constants.FILE_DATABASE)
         
         super.init()
         
@@ -28,6 +42,10 @@ class DatabaseService: NSObject {
         
         initDatabaseSchema()
         
+    }
+    
+    func databaseFileUrl() -> URL {
+        return dbDirUrl.appendingPathComponent(Constants.FILE_DATABASE)
     }
     
     private func initDatabaseDir(dataDir: URL) {
@@ -48,50 +66,19 @@ class DatabaseService: NSObject {
 
     private func initDatabaseSchema() {
         
-        let databaseFileUrl = dbDirUrl.appendingPathComponent(Constants.FILE_DATABASE)
-        
-        if fileSystemService.existFile(file: databaseFileUrl.path) {
+        if fileSystemService.existFile(file: dbFileUrl.path) {
             
             LOGGER.info(msg: "Database file found, list documents")
             
             // open database
             var db: OpaquePointer?
-            if sqlite3_open(databaseFileUrl.path, &db) != SQLITE_OK {
+            if sqlite3_open(dbFileUrl.path, &db) != SQLITE_OK {
                 LOGGER.error(msg: "Error opening database")
                 return
             }
             else {
                 LOGGER.error(msg: "Database connection successful")
             }
-            
-            // query
-            var statement: OpaquePointer?
-            if sqlite3_prepare_v2(db, "select id, name from documents", -1, &statement, nil) != SQLITE_OK {
-                let errmsg = String(cString: sqlite3_errmsg(db)!)
-                print("error preparing select: \(errmsg)")
-                return
-            }
-            
-            while sqlite3_step(statement) == SQLITE_ROW {
-                let id = sqlite3_column_int64(statement, 0)
-                print("id = \(id); ", terminator: "")
-                
-                if let cString = sqlite3_column_text(statement, 1) {
-                    let name = String(cString: cString)
-                    print("name = \(name)")
-                } else {
-                    print("name not found")
-                }
-            }
-            
-            // finalize
-            if sqlite3_finalize(statement) != SQLITE_OK {
-                let errmsg = String(cString: sqlite3_errmsg(db)!)
-                print("error finalizing prepared statement: \(errmsg)")
-            }
-            
-            statement = nil
-            
             
             // close database
             if sqlite3_close(db) != SQLITE_OK {
@@ -106,7 +93,7 @@ class DatabaseService: NSObject {
             
             // open database
             var db: OpaquePointer?
-            if sqlite3_open(databaseFileUrl.path, &db) != SQLITE_OK {
+            if sqlite3_open(dbFileUrl.path, &db) != SQLITE_OK {
                 LOGGER.error(msg: "Error opening database")
                 return
             }
@@ -115,7 +102,8 @@ class DatabaseService: NSObject {
             }
             
             // create table
-            if sqlite3_exec(db, "create table if not exists documents (id integer primary key autoincrement, name text)", nil, nil, nil) != SQLITE_OK {
+            // create table if not exists documents
+            if sqlite3_exec(db, "create table documents (id integer primary key autoincrement, label text, doc_id text, file_ref text, parts integer, status text)", nil, nil, nil) != SQLITE_OK {
                 let errmsg = String(cString: sqlite3_errmsg(db)!)
                 print("error creating table: \(errmsg)")
                 return
@@ -124,60 +112,48 @@ class DatabaseService: NSObject {
             // insert data
             var statement: OpaquePointer?
             
-            if sqlite3_prepare_v2(db, "insert into documents (name) values (?)", -1, &statement, nil) != SQLITE_OK {
+            if sqlite3_prepare_v2(db, "insert into documents (label, doc_id, file_ref, parts, status) values (?, ?, ?, ?, ?)", -1, &statement, nil) != SQLITE_OK {
                 let errmsg = String(cString: sqlite3_errmsg(db)!)
                 print("error preparing insert: \(errmsg)")
                 return
             }
             
-            // insert 1
-            if sqlite3_bind_text(statement, 1, "foo", -1, SQLITE_TRANSIENT) != SQLITE_OK {
+            /*
+            // insert
+            // bind label
+            if sqlite3_bind_text(statement, 1, "eu labelle", -1, SQLITE_TRANSIENT) != SQLITE_OK {
                 let errmsg = String(cString: sqlite3_errmsg(db)!)
-                print("failure binding foo: \(errmsg)")
+                print("failure binding label: \(errmsg)")
+                return
+            }
+            // bind docId
+            if sqlite3_bind_text(statement, 2, "58", -1, SQLITE_TRANSIENT) != SQLITE_OK {
+                let errmsg = String(cString: sqlite3_errmsg(db)!)
+                print("failure binding docId: \(errmsg)")
+                return
+            }
+            // bind fileRef
+            if sqlite3_bind_text(statement, 3, "theFileRef0EEF", -1, SQLITE_TRANSIENT) != SQLITE_OK {
+                let errmsg = String(cString: sqlite3_errmsg(db)!)
+                print("failure binding fileRef: \(errmsg)")
+                return
+            }
+            // bind parts
+            if sqlite3_bind_int64(statement, 4, 22) != SQLITE_OK {
+                let errmsg = String(cString: sqlite3_errmsg(db)!)
+                print("failure binding parts: \(errmsg)")
+                return
+            }
+            // bind status
+            if sqlite3_bind_text(statement, 5, "NEW", -1, SQLITE_TRANSIENT) != SQLITE_OK {
+                let errmsg = String(cString: sqlite3_errmsg(db)!)
+                print("failure binding status: \(errmsg)")
                 return
             }
             
             if sqlite3_step(statement) != SQLITE_DONE {
                 let errmsg = String(cString: sqlite3_errmsg(db)!)
-                print("failure inserting foo: \(errmsg)")
-                return
-            }
-            
-            // insert 2
-            if sqlite3_reset(statement) != SQLITE_OK {
-                let errmsg = String(cString: sqlite3_errmsg(db)!)
-                print("error resetting prepared statement: \(errmsg)")
-                return
-            }
-            
-            if sqlite3_bind_null(statement, 1) != SQLITE_OK {
-                let errmsg = String(cString: sqlite3_errmsg(db)!)
-                print("failure binding null: \(errmsg)")
-                return
-            }
-            
-            if sqlite3_step(statement) != SQLITE_DONE {
-                let errmsg = String(cString: sqlite3_errmsg(db)!)
-                print("failure inserting null: \(errmsg)")
-                return
-            }
-            
-            // insert 3
-            if sqlite3_reset(statement) != SQLITE_OK {
-                let errmsg = String(cString: sqlite3_errmsg(db)!)
-                print("error resetting prepared statement: \(errmsg)")
-                return
-            }
-            
-            if sqlite3_bind_text(statement, 1, "toto", -1, SQLITE_TRANSIENT) != SQLITE_OK {
-                let errmsg = String(cString: sqlite3_errmsg(db)!)
-                print("failure binding toto: \(errmsg)")
-                return
-            }
-            
-            if sqlite3_step(statement) != SQLITE_DONE {
-                let errmsg = String(cString: sqlite3_errmsg(db)!)
-                print("failure inserting toto: \(errmsg)")
+                print("failure inserting label: \(errmsg)")
                 return
             }
             
@@ -188,6 +164,7 @@ class DatabaseService: NSObject {
             }
             
             statement = nil
+            */
             
             // close database
             if sqlite3_close(db) != SQLITE_OK {
@@ -198,5 +175,187 @@ class DatabaseService: NSObject {
             
             LOGGER.info(msg: "inserted documents")
         }
+    }
+    
+    /**
+     * Insert a document in the local database
+     */
+    func insertDocument(document: DocumentData) -> DocumentData {
+        
+        // open database
+        var db: OpaquePointer?
+        if sqlite3_open(dbFileUrl.path, &db) != SQLITE_OK {
+            LOGGER.error(msg: "Error opening database")
+            //TODO
+        }
+        else {
+            LOGGER.error(msg: "Database connection successful")
+        }
+        
+        // insert data
+        var statement: OpaquePointer?
+        
+        if sqlite3_prepare_v2(db, "insert into documents (label, doc_id, file_ref, parts, status) values (?, ?, ?, ?, ?)", -1, &statement, nil) != SQLITE_OK {
+            let errmsg = String(cString: sqlite3_errmsg(db)!)
+            print("error preparing insert: \(errmsg)")
+            // TODO
+        }
+        
+        // insert
+        // bind label
+        if sqlite3_bind_text(statement, 1, document.label, -1, SQLITE_TRANSIENT) != SQLITE_OK {
+            let errmsg = String(cString: sqlite3_errmsg(db)!)
+            print("failure binding label: \(errmsg)")
+            // TODO
+        }
+        // bind docId
+        if sqlite3_bind_text(statement, 2, document.docId, -1, SQLITE_TRANSIENT) != SQLITE_OK {
+            let errmsg = String(cString: sqlite3_errmsg(db)!)
+            print("failure binding docId: \(errmsg)")
+            // TODO
+        }
+        // bind fileRef
+        if sqlite3_bind_text(statement, 3, document.fileRef, -1, SQLITE_TRANSIENT) != SQLITE_OK {
+            let errmsg = String(cString: sqlite3_errmsg(db)!)
+            print("failure binding fileRef: \(errmsg)")
+            // TODO
+        }
+        // bind parts
+        if sqlite3_bind_int64(statement, 4, sqlite3_int64(document.parts)) != SQLITE_OK {
+            let errmsg = String(cString: sqlite3_errmsg(db)!)
+            print("failure binding parts: \(errmsg)")
+            // TODO
+        }
+        // bind status
+        if sqlite3_bind_text(statement, 5, document.status, -1, SQLITE_TRANSIENT) != SQLITE_OK {
+            let errmsg = String(cString: sqlite3_errmsg(db)!)
+            print("failure binding status: \(errmsg)")
+            // TODO
+        }
+        
+        if sqlite3_step(statement) != SQLITE_DONE {
+            let errmsg = String(cString: sqlite3_errmsg(db)!)
+            print("failure inserting label: \(errmsg)")
+            // TODO
+        }
+        
+        // finalize
+        if sqlite3_finalize(statement) != SQLITE_OK {
+            let errmsg = String(cString: sqlite3_errmsg(db)!)
+            print("error finalizing prepared statement: \(errmsg)")
+        }
+        
+        statement = nil
+        
+        // close database
+        if sqlite3_close(db) != SQLITE_OK {
+            print("error closing database")
+        }
+        
+        db = nil
+        
+        LOGGER.debug(msg: "Document inserted, id=\(document.id), label=\(document.label), docId=\(document.docId), fileRef=\(document.fileRef), parts=\(document.parts), status=\(document.status)")
+        
+        return document
+    }
+    
+    /**
+     * List all documents in the local database
+     */
+    func listDocuments() -> Array<DocumentData> {
+        
+        var docs: Array<DocumentData> = []
+        
+        // open database
+        var db: OpaquePointer?
+        if sqlite3_open(dbFileUrl.path, &db) != SQLITE_OK {
+            LOGGER.error(msg: "Error opening database")
+            // TODO
+            return docs
+        }
+        else {
+            LOGGER.error(msg: "Database connection successful")
+        }
+        
+        // query
+        var statement: OpaquePointer?
+        if sqlite3_prepare_v2(db, "select id, label, doc_id, file_ref, parts, status from documents", -1, &statement, nil) != SQLITE_OK {
+            let errmsg = String(cString: sqlite3_errmsg(db)!)
+            print("error preparing select: \(errmsg)")
+            // TODO
+            return docs
+        }
+        
+        while sqlite3_step(statement) == SQLITE_ROW {
+            
+            // id
+            let id = sqlite3_column_int64(statement, 0)
+            let idValue = Int(id)
+            print("idValue= \(idValue); ", terminator: "")
+            
+            // label
+            var labelValue = ""
+            if let cString = sqlite3_column_text(statement, 1) {
+                labelValue = String(cString: cString)
+                print("labelValue = \(labelValue)")
+            } else {
+                print("labelValue not found")
+            }
+            
+            // doc id
+            var docValue = ""
+            if let cString = sqlite3_column_text(statement, 2) {
+                docValue = String(cString: cString)
+                print("docValue = \(docValue)")
+            } else {
+                print("docValue not found")
+            }
+            // fileref
+            var fileValue = ""
+            if let cString = sqlite3_column_text(statement, 3) {
+                fileValue = String(cString: cString)
+                print("fileValue = \(fileValue)")
+            } else {
+                print("fileValue not found")
+            }
+            
+            // parts
+            let parts = sqlite3_column_int64(statement, 4)
+            let partsValue = Int(parts)
+            print("partsValue = \(partsValue); ", terminator: "")
+            
+            // status
+            var statusValue = ""
+            if let cString = sqlite3_column_text(statement, 5) {
+                statusValue = String(cString: cString)
+                print("statusValue = \(statusValue)")
+            } else {
+                print("statusValue not found")
+            }
+            
+            // add to list
+            let doc = DocumentData(id: idValue, label: labelValue, docId: docValue, fileRef: fileValue, parts: partsValue, status: statusValue)
+            
+            docs.append(doc)
+        }
+        
+        // finalize
+        if sqlite3_finalize(statement) != SQLITE_OK {
+            // TODO
+            let errmsg = String(cString: sqlite3_errmsg(db)!)
+            print("Error finalizing prepared statement: \(errmsg)")
+        }
+        
+        statement = nil
+        
+        // close database
+        if sqlite3_close(db) != SQLITE_OK {
+            // TODO
+            print("Error closing database")
+        }
+        
+        db = nil
+        
+        return docs
     }
 }

@@ -10,16 +10,28 @@ import UIKit
 
 class DocumentData: NSObject {
 
+    var id: Int
     var label: String
     var docId: String
     var fileRef: String
     var parts: Int
+    var status: String
     
     init(label: String, docId: String, fileRef: String, parts: Int) {
+        self.id = Constants.ID_UNDEFINED
         self.label = label
         self.docId = docId
         self.fileRef = fileRef
         self.parts = parts
+        self.status = DocumentStatus.NONE
     }
     
+    init(id: Int, label: String, docId: String, fileRef: String, parts: Int, status: String) {
+        self.id = id
+        self.label = label
+        self.docId = docId
+        self.fileRef = fileRef
+        self.parts = parts
+        self.status = status
+    }
 }

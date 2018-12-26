@@ -10,6 +10,8 @@ import UIKit
 
 class Constants: NSObject {
 
+    static let ID_UNDEFINED = -1
+    
     static let HEADER_SESSION_ID = "app-session-id"
     
     static let DIR_APPLICATION = "efbware"
