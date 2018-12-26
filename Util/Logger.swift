@@ -55,7 +55,18 @@ class Logger {
         let currentLevel = getValue(level: logLevel)
         
         if(msgLevel >= currentLevel) {
-            logEx(log: msg)
+            
+            var prefix = ""
+            
+            switch level {
+            case .error:
+                prefix = "💢 "
+                break
+            default:
+                prefix = ""
+            }
+            
+            logEx(log: prefix + msg)
         }
     }
     

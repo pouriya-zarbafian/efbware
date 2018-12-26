@@ -36,6 +36,10 @@
 		A631817D21D1B2E100D06532 /* DocumentData.swift in Sources */ = {isa = PBXBuildFile; fileRef = A631817C21D1B2E100D06532 /* DocumentData.swift */; };
 		A66AE29C21D3DBD200A22B7A /* DatabaseService.swift in Sources */ = {isa = PBXBuildFile; fileRef = A66AE29B21D3DBD200A22B7A /* DatabaseService.swift */; };
 		A66AE29E21D3FA7F00A22B7A /* DocumentStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = A66AE29D21D3FA7F00A22B7A /* DocumentStatus.swift */; };
+		A66AE2A121D4297000A22B7A /* DocumentService.swift in Sources */ = {isa = PBXBuildFile; fileRef = A66AE2A021D4297000A22B7A /* DocumentService.swift */; };
+		A66AE2A421D4353600A22B7A /* DatabaseError.swift in Sources */ = {isa = PBXBuildFile; fileRef = A66AE2A321D4353600A22B7A /* DatabaseError.swift */; };
+		A66AE2A621D435E900A22B7A /* DocumentDao.swift in Sources */ = {isa = PBXBuildFile; fileRef = A66AE2A521D435E900A22B7A /* DocumentDao.swift */; };
+		A66AE2A821D43DAC00A22B7A /* SchemaDao.swift in Sources */ = {isa = PBXBuildFile; fileRef = A66AE2A721D43DAC00A22B7A /* SchemaDao.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -83,6 +87,10 @@
 		A631817C21D1B2E100D06532 /* DocumentData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DocumentData.swift; sourceTree = "<group>"; };
 		A66AE29B21D3DBD200A22B7A /* DatabaseService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DatabaseService.swift; sourceTree = "<group>"; };
 		A66AE29D21D3FA7F00A22B7A /* DocumentStatus.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DocumentStatus.swift; sourceTree = "<group>"; };
+		A66AE2A021D4297000A22B7A /* DocumentService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DocumentService.swift; sourceTree = "<group>"; };
+		A66AE2A321D4353600A22B7A /* DatabaseError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatabaseError.swift; sourceTree = "<group>"; };
+		A66AE2A521D435E900A22B7A /* DocumentDao.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DocumentDao.swift; sourceTree = "<group>"; };
+		A66AE2A721D43DAC00A22B7A /* SchemaDao.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SchemaDao.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -106,6 +114,7 @@
 		A631811C21D1720C00D06532 = {
 			isa = PBXGroup;
 			children = (
+				A66AE2A221D434E400A22B7A /* Dao */,
 				A631817121D1850400D06532 /* Xml */,
 				A631816C21D1809A00D06532 /* Data */,
 				A631816921D17E9F00D06532 /* Service */,
@@ -190,6 +199,7 @@
 				A631817421D1978200D06532 /* HttpService.swift */,
 				A66AE29B21D3DBD200A22B7A /* DatabaseService.swift */,
 				A631814F21D1749100D06532 /* FileSystemService.swift */,
+				A66AE2A021D4297000A22B7A /* DocumentService.swift */,
 			);
 			path = Service;
 			sourceTree = "<group>";
@@ -213,6 +223,16 @@
 				A631817821D1A31300D06532 /* DocumentRequest.swift */,
 			);
 			path = Xml;
+			sourceTree = "<group>";
+		};
+		A66AE2A221D434E400A22B7A /* Dao */ = {
+			isa = PBXGroup;
+			children = (
+				A66AE2A321D4353600A22B7A /* DatabaseError.swift */,
+				A66AE2A521D435E900A22B7A /* DocumentDao.swift */,
+				A66AE2A721D43DAC00A22B7A /* SchemaDao.swift */,
+			);
+			path = Dao;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -320,7 +340,11 @@
 				A631816421D17E7800D06532 /* Parser.swift in Sources */,
 				A631817321D1851400D06532 /* LoginRequest.swift in Sources */,
 				A631816E21D180A400D06532 /* LoginData.swift in Sources */,
+				A66AE2A821D43DAC00A22B7A /* SchemaDao.swift in Sources */,
+				A66AE2A121D4297000A22B7A /* DocumentService.swift in Sources */,
+				A66AE2A421D4353600A22B7A /* DatabaseError.swift in Sources */,
 				A631816521D17E7800D06532 /* Element.swift in Sources */,
+				A66AE2A621D435E900A22B7A /* DocumentDao.swift in Sources */,
 				A631815821D1767A00D06532 /* DocumentsViewController.swift in Sources */,
 				A66AE29C21D3DBD200A22B7A /* DatabaseService.swift in Sources */,
 				A631812B21D1720C00D06532 /* RootController.swift in Sources */,

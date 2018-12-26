@@ -12,12 +12,37 @@ class RootController: UITabBarController {
 
     private let LOGGER = Logger.getInstance()
     
+    //var advanceTasksTImer: Timer
+    
     static var loggedIn = false
+    
+    let runAdvanceTasks: (Timer) -> Void = {
+        
+        if(loggedIn) {
+            print("searching for new documents, timer=\($0.fireDate), interval=\($0.timeInterval)")
+            
+            var newDocs = DatabaseService.getInstance().listNewDocuments()
+            print("found \(newDocs.count) documents with state \(DocumentStatus.NEW)")
+            
+            let docService = DocumentService()
+            
+            for doc in newDocs {
+                docService.handle(document: doc)
+            }
+        }
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
         
+        // Init DB
+        _ = DatabaseService.getInstance()
+        
+        //advanceTasksTImer =
+        Timer.scheduledTimer(withTimeInterval: Constants.ACTIVITY_ADVANCE_TASKS_PERIOD, repeats: true, block: runAdvanceTasks)
+        
+        LOGGER.info(msg: "💜 Timer started")
     }
 
     override func viewDidAppear(_ animated: Bool) {

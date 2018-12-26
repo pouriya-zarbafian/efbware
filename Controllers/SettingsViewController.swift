@@ -86,9 +86,9 @@ class SettingsViewController: UIViewController {
         LOGGER.debug(msg: "databaseDirectory=\(docsUrl.path)")
         
         // query
-        let documents = DatabaseService.getInstance().listDocuments()
+        let documents = DatabaseService.getInstance().listAllDocuments()
         for doc in documents {
-            LOGGER.debug(msg: "found document, id=\(doc.id), label=\(doc.label), docId=\(doc.docId), fileRef=\(doc.fileRef), parts=\(doc.parts), status=\(doc.status)")
+            LOGGER.debug(msg: "found document, id=\(doc.id), label=\(doc.label), fileName=\(doc.fileName) docId=\(doc.docId), fileRef=\(doc.fileRef), parts=\(doc.parts), status=\(doc.status)")
         }
         
     }

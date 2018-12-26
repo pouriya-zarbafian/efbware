@@ -51,7 +51,7 @@ class DocumentsViewController: UIViewController, UITableViewDelegate, UITableVie
         
         let onResult: (Array<DocumentData>) -> Void = {
             
-            self.LOGGER.error(msg: "DocumentsViewController.onResults, size=\($0.count)")
+            self.LOGGER.info(msg: "DocumentsViewController.onResults, size=\($0.count)")
             
             self.documents.removeAll()
             
@@ -68,7 +68,7 @@ class DocumentsViewController: UIViewController, UITableViewDelegate, UITableVie
             self.LOGGER.debug(msg: "server documents.count=\(self.documents.count)")
             
             // list of docs in database
-            let dbList = DatabaseService.getInstance().listDocuments()
+            let dbList = DatabaseService.getInstance().listAllDocuments()
             
             // compare
             let newDocs = self.findNewDocuments(serverList: self.documents, dbList: dbList)

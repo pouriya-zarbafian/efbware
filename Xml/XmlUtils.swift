@@ -53,10 +53,11 @@ class XmlUtils: NSObject {
                 
                 let docLabel = item["label"].string
                 let docId = item["id"].string
+                let fileName = item["fileName"].string
                 let fileRef = item["files"]["file"]["fileRef"].string
                 let totalPart = item["files"]["file"]["totalPart"].string
                 
-                let documentData = DocumentData(label: docLabel, docId: docId, fileRef: fileRef, parts: Int(totalPart)!)
+                let documentData = DocumentData(label: docLabel, fileName: fileName, docId: docId, fileRef: fileRef, parts: Int(totalPart)!)
                 
                 LOGGER.info(msg: "parsed document, label=\(documentData.label), docId=\(documentData.docId), fileRef=\(documentData.fileRef), totalPart=\(documentData.parts)")
                 

@@ -32,7 +32,7 @@ class DokaService: NSObject {
  
             let xml = $1
             
-            self.LOGGER.error(msg: "documents retrieved, xml=\n\(xml)")
+            self.LOGGER.info(msg: "documents retrieved, xml=\n\(xml)")
             
             let docs = XmlUtils.parseSearchResult(xml: xml)
             

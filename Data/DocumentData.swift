@@ -12,23 +12,26 @@ class DocumentData: NSObject {
 
     var id: Int
     var label: String
+    var fileName: String
     var docId: String
     var fileRef: String
     var parts: Int
     var status: String
     
-    init(label: String, docId: String, fileRef: String, parts: Int) {
+    init(label: String, fileName: String, docId: String, fileRef: String, parts: Int) {
         self.id = Constants.ID_UNDEFINED
         self.label = label
+        self.fileName = fileName
         self.docId = docId
         self.fileRef = fileRef
         self.parts = parts
         self.status = DocumentStatus.NONE
     }
     
-    init(id: Int, label: String, docId: String, fileRef: String, parts: Int, status: String) {
+    init(id: Int, label: String, fileName: String, docId: String, fileRef: String, parts: Int, status: String) {
         self.id = id
         self.label = label
+        self.fileName = fileName
         self.docId = docId
         self.fileRef = fileRef
         self.parts = parts

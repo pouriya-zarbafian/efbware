@@ -88,7 +88,7 @@ class FileSystemService {
         //writing
         do {
             try sid.write(to: sidFileUrl, atomically: false, encoding: .utf8)
-            LOGGER.error(msg: "Sid written to cache file")
+            LOGGER.info(msg: "Sid written to cache file")
         }
         catch {
             /* error handling here */
@@ -105,12 +105,12 @@ class FileSystemService {
         //reading
         do {
             let sid = try String(contentsOf: sidFileUrl, encoding: .utf8)
-            LOGGER.error(msg: "Sid read from cache file")
+            LOGGER.info(msg: "Sid read from cache file")
             return sid
         }
         catch {
             /* error handling here */
-            LOGGER.error(msg: "Error reading sid from cache file")
+            LOGGER.info(msg: "No sid found in cache file")
             return ""
         }
     }
