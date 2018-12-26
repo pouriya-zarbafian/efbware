@@ -34,6 +34,7 @@
 		A631817921D1A31300D06532 /* DocumentRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = A631817821D1A31300D06532 /* DocumentRequest.swift */; };
 		A631817B21D1A34000D06532 /* DocumentRequestData.swift in Sources */ = {isa = PBXBuildFile; fileRef = A631817A21D1A34000D06532 /* DocumentRequestData.swift */; };
 		A631817D21D1B2E100D06532 /* DocumentData.swift in Sources */ = {isa = PBXBuildFile; fileRef = A631817C21D1B2E100D06532 /* DocumentData.swift */; };
+		A66AE29C21D3DBD200A22B7A /* DatabaseService.swift in Sources */ = {isa = PBXBuildFile; fileRef = A66AE29B21D3DBD200A22B7A /* DatabaseService.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -79,6 +80,7 @@
 		A631817821D1A31300D06532 /* DocumentRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DocumentRequest.swift; sourceTree = "<group>"; };
 		A631817A21D1A34000D06532 /* DocumentRequestData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DocumentRequestData.swift; sourceTree = "<group>"; };
 		A631817C21D1B2E100D06532 /* DocumentData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DocumentData.swift; sourceTree = "<group>"; };
+		A66AE29B21D3DBD200A22B7A /* DatabaseService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DatabaseService.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -149,7 +151,6 @@
 		A631814D21D1747E00D06532 /* Util */ = {
 			isa = PBXGroup;
 			children = (
-				A631814F21D1749100D06532 /* FileSystemService.swift */,
 				A631814E21D1749100D06532 /* Logger.swift */,
 				A631815221D1751700D06532 /* Constants.swift */,
 			);
@@ -185,6 +186,8 @@
 			children = (
 				A631816F21D1842300D06532 /* DokaService.swift */,
 				A631817421D1978200D06532 /* HttpService.swift */,
+				A66AE29B21D3DBD200A22B7A /* DatabaseService.swift */,
+				A631814F21D1749100D06532 /* FileSystemService.swift */,
 			);
 			path = Service;
 			sourceTree = "<group>";
@@ -316,6 +319,7 @@
 				A631816E21D180A400D06532 /* LoginData.swift in Sources */,
 				A631816521D17E7800D06532 /* Element.swift in Sources */,
 				A631815821D1767A00D06532 /* DocumentsViewController.swift in Sources */,
+				A66AE29C21D3DBD200A22B7A /* DatabaseService.swift in Sources */,
 				A631812B21D1720C00D06532 /* RootController.swift in Sources */,
 				A631817021D1842300D06532 /* DokaService.swift in Sources */,
 				A631815C21D176A200D06532 /* SettingsViewController.swift in Sources */,

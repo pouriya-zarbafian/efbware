@@ -29,7 +29,7 @@ class Logger {
         return Logger.instance
     }
     
-    init() {
+    private init() {
         print("Logger.init")
     }
     

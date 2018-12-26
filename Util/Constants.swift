@@ -12,10 +12,20 @@ class Constants: NSObject {
 
     static let HEADER_SESSION_ID = "app-session-id"
     
-    static let URL_ITEM_SEARCH = "http://my.doka.live/adserver/item/search"
-    static let URL_INFO = "http://my.doka.live/adserver/session/info"
-    static let URL_LOGIN = "http://my.doka.live/adserver/session/login"
-    static let URL_LOGOUT = "http://my.doka.live/adserver/session/logout"
+    static let DIR_APPLICATION = "efbware"
+    static let DIR_DATABASE = "database"
+    static let DIR_DOCUMENTS = "documents"
+    static let DIR_TECHLOGS = "techlogs"
+    
+    static let FILE_SID = "sid"
+    static let FILE_DATABASE = "efbware.sqlite"
+    
+    static let URL_API = "http://my.doka.live/adserver"
+    
+    static let URL_ITEM_SEARCH  = URL_API + "/item/search"
+    static let URL_INFO         = URL_API + "/session/info"
+    static let URL_LOGIN        = URL_API + "/session/login"
+    static let URL_LOGOUT       = URL_API + "/session/logout"
     
     static let SEGUE_APP_TO_LOGIN = "appToLogin"
 }

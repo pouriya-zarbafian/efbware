@@ -18,6 +18,40 @@ class LoginController: UIViewController {
     
     var httpService = HttpService()
     
+    var fileSystemService = FileSystemService.getInstance()
+    
+    // MARK: Init
+    override func viewDidLoad() {
+        
+        super.viewDidLoad()
+        
+        let sid = FileSystemService.getInstance().readSid()
+        
+        if sid.isEmpty {
+            // No sid
+        }
+        else {
+            // Attempt login with sid
+            let errorClosure: () -> Void = {
+                // Sid was invalid
+                self.LOGGER.debug(msg: "Could not login from sid")
+                LoginController.sid = ""
+            }
+            let successClosure: (HTTPURLResponse, String) -> Void = {
+                // Sid was valid
+                self.LOGGER.debug(msg: "Logged in from sid")
+                let sid = $0.allHeaderFields[Constants.HEADER_SESSION_ID] as! String
+                _ = $1
+                self.receivedValidSid(sid: sid)
+            }
+            
+            // TODO: improve this
+            LoginController.sid = sid
+            
+            httpService.post(url: Constants.URL_INFO, xml: "", onSuccess: successClosure, onError: errorClosure)
+        }
+    }
+    
     // MARK: UI
     @IBOutlet weak var loginInput: UITextField!
     @IBOutlet weak var passwordInput: UITextField!
@@ -40,11 +74,10 @@ class LoginController: UIViewController {
                 let sid = $0.allHeaderFields[Constants.HEADER_SESSION_ID] as! String
                 _ = $1
                 self.LOGGER.info(msg: "Login successful, sid=\(sid)")
-                LoginController.sid = sid
-                RootController.loggedIn = true
-                DispatchQueue.main.async {
-                    self.dismiss(animated: false, completion: nil)
-                }
+                self.receivedValidSid(sid: sid)
+                
+                // write sid to cache
+                FileSystemService.getInstance().writeSid(sid: sid)
             }
             
             let errorClosure: () -> Void = {
@@ -61,6 +94,14 @@ class LoginController: UIViewController {
             }
             
             httpService.post(url: Constants.URL_LOGIN, xml: xml, onSuccess: successClosure, onError: errorClosure)
+        }
+    }
+    
+    private func receivedValidSid(sid: String) {
+        LoginController.sid = sid
+        RootController.loggedIn = true
+        DispatchQueue.main.async {
+            self.dismiss(animated: false, completion: nil)
         }
     }
 }
