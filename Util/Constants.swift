@@ -13,7 +13,7 @@ class Constants: NSObject {
     static let ID_UNDEFINED = -1
     
     static let ACTIVITY_ADVANCE_TASKS = "com.efbware.activity.advanceTaks"
-    static let ACTIVITY_ADVANCE_TASKS_PERIOD = 5.0
+    static let ACTIVITY_ADVANCE_TASKS_PERIOD = 15.0
     
     static let HEADER_SESSION_ID = "app-session-id"
     
@@ -31,6 +31,9 @@ class Constants: NSObject {
     static let URL_INFO         = URL_API + "/session/info"
     static let URL_LOGIN        = URL_API + "/session/login"
     static let URL_LOGOUT       = URL_API + "/session/logout"
+    static let URL_READ_PART    = URL_API + "/file/readPart"
+    
+    static let HTTP_CONTENT_TYPE_XML = "application/xml"
     
     static let SEGUE_APP_TO_LOGIN = "appToLogin"
 }

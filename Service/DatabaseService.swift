@@ -60,9 +60,16 @@ class DatabaseService: NSObject {
             LOGGER.info(msg: "dir found: \(dataDir.path)")
         }
         else {
-            LOGGER.info(msg: "creating diretory DATABASE, dir=\(dataDir.path)")
-            fileSystemService.createDir(dir: dataDir)
-            LOGGER.info(msg: "DATABASE directory created")
+            LOGGER.info(msg: "Creating database diretory, dir=\(dataDir.path)")
+            
+            do {
+                try fileSystemService.createDir(dir: dataDir)
+            } catch {
+                LOGGER.error(msg: "Error creating database diretory")
+                return
+            }
+            
+            LOGGER.info(msg: "Database directory created")
         }
     }
 
@@ -139,9 +146,9 @@ class DatabaseService: NSObject {
     /**
      * List new documents in the local database
      */
-    func listNewDocuments() -> Array<DocumentData> {
+    func listDocumentsByStatus(status: String) -> Array<DocumentData> {
         do {
-            return try self.documentDao.listNewDocuments()
+            return try self.documentDao.listDocumentsByStatus(status: status)
         }
         catch {
             return []
@@ -162,11 +169,24 @@ class DatabaseService: NSObject {
     }
     
     /**
+     * Update a document part in the local database
+     */
+    func updateDocumentPart(part: DocumentPartData) -> DocumentPartData? {
+        
+        do {
+            return try self.documentPartDao.update(part: part)
+        }
+        catch {
+            return nil
+        }
+    }
+    
+    /**
      * List all documents parts for a documents
      */
-    func listDocumentParts(documentId: Int) -> Array<DocumentPartData> {
+    func listDocumentParts(documentId: Int, status: String) -> Array<DocumentPartData> {
         do {
-            return try self.documentPartDao.listNewParts(document: documentId)
+            return try self.documentPartDao.listPartsByStatus(document: documentId, status: status)
         }
         catch {
             return []

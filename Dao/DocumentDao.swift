@@ -127,7 +127,7 @@ class DocumentDao: NSObject {
             LOGGER.debug(msg: "Database connection successful")
         }
         
-        // insert data
+        // update data
         var statement: OpaquePointer?
         
         if sqlite3_prepare_v2(db, "UPDATE document SET status = ? WHERE id = ?", -1, &statement, nil) != SQLITE_OK {
@@ -288,8 +288,8 @@ class DocumentDao: NSObject {
     /**
      * List new documents in the local database
      */
-    func listNewDocuments() throws -> Array<DocumentData> {
-        return try listDocuments(status: DocumentStatus.NEW)
+    func listDocumentsByStatus(status: String) throws -> Array<DocumentData> {
+        return try listDocuments(status: status)
     }
     
     private func listDocuments(status: String) throws -> Array<DocumentData> {
@@ -315,7 +315,7 @@ class DocumentDao: NSObject {
             // keep as is
         }
         else {
-            sql += " where status = '" + DocumentStatus.NEW + "'"
+            sql += " where status = '" + status + "'"
         }
         
         // query

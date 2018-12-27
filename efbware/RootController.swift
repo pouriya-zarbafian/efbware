@@ -19,15 +19,36 @@ class RootController: UITabBarController {
     let runAdvanceTasks: (Timer) -> Void = {
         
         if(loggedIn) {
-            print("searching for new documents, timer=\($0.fireDate), interval=\($0.timeInterval)")
-            
-            var newDocs = DatabaseService.getInstance().listNewDocuments()
-            print("found \(newDocs.count) documents with state \(DocumentStatus.NEW)")
             
             let docService = DocumentService()
             
+            print("searching for new documents, timer=\($0.fireDate), interval=\($0.timeInterval)")
+            
+            var newDocs = DatabaseService.getInstance().listDocumentsByStatus(status: DocumentStatus.NEW)
+            print("found \(newDocs.count) documents with state \(DocumentStatus.NEW)")
+            
             for doc in newDocs {
-                docService.handle(document: doc)
+                docService.handleNewDocument(document: doc)
+            }
+            
+            print("searching for building documents")
+            
+            var buildingDocs = DatabaseService.getInstance().listDocumentsByStatus(status: DocumentStatus.BUILDING)
+            print("found \(buildingDocs.count) documents with state \(DocumentStatus.BUILDING)")
+            
+            
+            for doc in buildingDocs {
+                docService.handleBuildingDocument(document: doc)
+            }
+            
+            print("searching for complete documents")
+            
+            var completeDocs = DatabaseService.getInstance().listDocumentsByStatus(status: DocumentStatus.BUILDING)
+            print("found \(completeDocs.count) potential documents with state \(DocumentStatus.BUILDING)")
+            
+            
+            for doc in completeDocs {
+                docService.checkBuildingDocument(document: doc)
             }
         }
     }

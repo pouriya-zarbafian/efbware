@@ -13,5 +13,6 @@ class DocumentStatus {
     static let  NEW = "new"
     static let  BUILDING = "building"
     static let  ERROR = "error"
+    static let  COMPLETE = "complete"
     static let  DONE = "done"
 }

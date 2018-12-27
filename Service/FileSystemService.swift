@@ -21,8 +21,9 @@ class FileSystemService {
         return instance
     }
     
-    var documentsUrl: URL
-    var appDirUrl: URL
+    let documentsUrl: URL
+    let appDirUrl: URL
+    let docsDirUrl: URL
     
     private init() {
         
@@ -33,17 +34,35 @@ class FileSystemService {
         LOGGER.debug(msg: "documentsUrl=\(documentsUrl)")
         
         appDirUrl = documentsUrl.appendingPathComponent(Constants.DIR_APPLICATION, isDirectory: true)
+        docsDirUrl = appDirUrl.appendingPathComponent(Constants.DIR_DOCUMENTS)
         
-        if(existDir(dir: appDirUrl.path)) {
-            LOGGER.info(msg: "app dir found")
-        }
-        else {
-            createDir(dir: appDirUrl)
-            LOGGER.info(msg: "app dir created")
+        do {
+            if(existDir(dir: appDirUrl.path)) {
+                LOGGER.info(msg: "app dir found")
+            }
+            else {
+                try createDir(dir: appDirUrl)
+                LOGGER.info(msg: "app dir created")
+            }
+            
+            if(existDir(dir: docsDirUrl.path)) {
+                LOGGER.info(msg: "documents dir found")
+            }
+            else {
+                try createDir(dir: docsDirUrl)
+                LOGGER.info(msg: "documents dir created")
+            }
+        } catch {
+            LOGGER.error(msg: "Error creating folders in app dir")
         }
     }
     
-    func createDir(dir: URL) {
+    func getDocumentsUrl() -> URL {
+        
+        return URL(fileURLWithPath: docsDirUrl.path)
+    }
+    
+    func createDir(dir: URL) throws {
         
         LOGGER.debug(msg: "createDir, dir=\(dir)")
         
@@ -51,8 +70,25 @@ class FileSystemService {
             try FileManager.default.createDirectory(at: dir, withIntermediateDirectories: false, attributes: nil)
             LOGGER.info(msg: "Dir created successfully")
         } catch let error as NSError {
-            print("Error while creating dir \(documentsUrl.path): \(error.description)")
+            LOGGER.error(msg: "Error while creating dir \(dir.path): \(error.description)")
+            throw FileSystemError.directoryCreationError(message: error.description)
         }
+    }
+    
+    func createFile(file: URL) {
+        
+        LOGGER.debug(msg: "createFile, file=\(file)")
+        
+        FileManager.default.createFile(atPath: file.path, contents: nil)
+        /*
+        do {
+            FileManager.default.createFile(atPath: file.path, contents: nil)
+            LOGGER.info(msg: "File created successfully")
+        } catch let error as NSError {
+            LOGGER.error(msg: "Error while creating dir \(file.path): \(error.description)")
+            throw FileSystemError.fileCreationError(message: error.description)
+        }
+         */
     }
     
     func existFile(file: String)  -> Bool {
@@ -77,6 +113,10 @@ class FileSystemService {
         LOGGER.debug(msg: "existDir, res=\(res)")
         
         return res
+    }
+    
+    func delete(url: URL) throws {
+        try FileManager.default.removeItem(at: url)
     }
     
     func writeSid(sid: String) {

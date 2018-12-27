@@ -95,9 +95,73 @@ class DocumentPartDao: NSObject {
     }
     
     /**
+     * Update a document
+     */
+    func update(part: DocumentPartData) throws -> DocumentPartData {
+        
+        // open database
+        var db: OpaquePointer?
+        if sqlite3_open(dbFileUrl.path, &db) != SQLITE_OK {
+            LOGGER.error(msg: "Error opening database")
+            throw DatabaseError.connectionError(message: "Cannot open database")
+        }
+        else {
+            LOGGER.debug(msg: "Database connection successful")
+        }
+        
+        // update data
+        var statement: OpaquePointer?
+        
+        if sqlite3_prepare_v2(db, "UPDATE document_part SET status = ? WHERE id = ?", -1, &statement, nil) != SQLITE_OK {
+            let errmsg = String(cString: sqlite3_errmsg(db)!)
+            LOGGER.error(msg: "Error preparing insert: \(errmsg)")
+            throw DatabaseError.sqlError(message: "Error prepare: \(errmsg)")
+        }
+        
+        // update
+        // bind status
+        if sqlite3_bind_text(statement, 1, part.status, -1, SQLITE_TRANSIENT) != SQLITE_OK {
+            let errmsg = String(cString: sqlite3_errmsg(db)!)
+            LOGGER.error(msg: "failure binding status: \(errmsg)")
+            throw DatabaseError.sqlError(message: "Error binding: \(errmsg)")
+        }
+        // bind document id
+        if sqlite3_bind_int64(statement, 2, sqlite3_int64(part.id)) != SQLITE_OK {
+            let errmsg = String(cString: sqlite3_errmsg(db)!)
+            LOGGER.error(msg: "failure binding doc id: \(errmsg)")
+            throw DatabaseError.sqlError(message: "Error binding: \(errmsg)")
+        }
+        
+        if sqlite3_step(statement) != SQLITE_DONE {
+            let errmsg = String(cString: sqlite3_errmsg(db)!)
+            LOGGER.error(msg: "Error while updating document: \(errmsg)")
+            throw DatabaseError.sqlError(message: "Error while updating document: \(errmsg)")
+        }
+        
+        // finalize
+        if sqlite3_finalize(statement) != SQLITE_OK {
+            let errmsg = String(cString: sqlite3_errmsg(db)!)
+            LOGGER.error(msg: "Error finalizing prepared statement: \(errmsg)")
+        }
+        
+        statement = nil
+        
+        // close database
+        if sqlite3_close(db) != SQLITE_OK {
+            LOGGER.error(msg: "error closing database")
+        }
+        
+        db = nil
+        
+        LOGGER.info(msg: "Document part updated, id=\(part.id), status=\(part.status)")
+        
+        return part
+    }
+    
+    /**
      * List new document parts in the local database
      */
-    func listNewParts(document: Int) throws -> Array<DocumentPartData> {
+    func listPartsByStatus(document: Int, status: String) throws -> Array<DocumentPartData> {
         
         var parts: Array<DocumentPartData> = []
         
@@ -112,7 +176,7 @@ class DocumentPartDao: NSObject {
         }
         
         // sql
-        let sql = "SELECT id, part_number, document, status from document_part WHERE document = " + String(document) + " AND status = '" + DocumentPartStatus.NEW + "'"
+        let sql = "SELECT id, part_number, document, status from document_part WHERE document = " + String(document) + " AND status = '" + status + "'"
         
         
         // query

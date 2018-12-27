@@ -91,7 +91,7 @@ class SettingsViewController: UIViewController {
             LOGGER.debug(msg: "found document, id=\(doc.id), label=\(doc.label), fileName=\(doc.fileName) docId=\(doc.docId), fileRef=\(doc.fileRef), parts=\(doc.parts), status=\(doc.status)")
             LOGGER.debug(msg: "_")
             
-            let parts = DatabaseService.getInstance().listDocumentParts(documentId: doc.id)
+            let parts = DatabaseService.getInstance().listDocumentParts(documentId: doc.id, status: DocumentPartStatus.NEW)
             for part in parts {
                 LOGGER.debug(msg: "  found part, id=\(part.id), documentId=\(part.documentId), partNumber=\(part.partNumber), status=\(part.status)")
             }

@@ -95,12 +95,12 @@ class DocumentsViewController: UIViewController, UITableViewDelegate, UITableVie
         var localDic: [String:DocumentData] = [:]
         
         for doc in dbList {
-            let key = buildKey(doc: doc)
+            let key = KeyUtils.buildDocumentKey(doc: doc)
             localDic[key] = doc
         }
         
         for doc in serverList {
-            let key = buildKey(doc: doc)
+            let key = KeyUtils.buildDocumentKey(doc: doc)
             if (localDic[key] != nil) {
                 LOGGER.debug(msg: "key existed: \(key)")
             }
@@ -113,9 +113,4 @@ class DocumentsViewController: UIViewController, UITableViewDelegate, UITableVie
         return newDocs
     }
     
-    private func buildKey(doc: DocumentData) -> String {
-        
-        let key = doc.docId + "_" + doc.fileRef
-        return key
-    }
 }

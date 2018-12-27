@@ -43,6 +43,9 @@
 		A66AE2AA21D444AB00A22B7A /* DocumentPartData.swift in Sources */ = {isa = PBXBuildFile; fileRef = A66AE2A921D444AB00A22B7A /* DocumentPartData.swift */; };
 		A66AE2AC21D4456A00A22B7A /* DocumentPartStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = A66AE2AB21D4456A00A22B7A /* DocumentPartStatus.swift */; };
 		A66AE2AE21D446E200A22B7A /* DocumentPartDao.swift in Sources */ = {isa = PBXBuildFile; fileRef = A66AE2AD21D446E200A22B7A /* DocumentPartDao.swift */; };
+		A66AE2B021D461A100A22B7A /* DocumentPartRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = A66AE2AF21D461A100A22B7A /* DocumentPartRequest.swift */; };
+		A66AE2B221D467B900A22B7A /* KeyUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = A66AE2B121D467B900A22B7A /* KeyUtils.swift */; };
+		A66AE2B421D4805100A22B7A /* FileSystemError.swift in Sources */ = {isa = PBXBuildFile; fileRef = A66AE2B321D4805100A22B7A /* FileSystemError.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -97,6 +100,9 @@
 		A66AE2A921D444AB00A22B7A /* DocumentPartData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DocumentPartData.swift; sourceTree = "<group>"; };
 		A66AE2AB21D4456A00A22B7A /* DocumentPartStatus.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DocumentPartStatus.swift; sourceTree = "<group>"; };
 		A66AE2AD21D446E200A22B7A /* DocumentPartDao.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DocumentPartDao.swift; sourceTree = "<group>"; };
+		A66AE2AF21D461A100A22B7A /* DocumentPartRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DocumentPartRequest.swift; sourceTree = "<group>"; };
+		A66AE2B121D467B900A22B7A /* KeyUtils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyUtils.swift; sourceTree = "<group>"; };
+		A66AE2B321D4805100A22B7A /* FileSystemError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileSystemError.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -170,6 +176,7 @@
 			children = (
 				A631814E21D1749100D06532 /* Logger.swift */,
 				A631815221D1751700D06532 /* Constants.swift */,
+				A66AE2B121D467B900A22B7A /* KeyUtils.swift */,
 			);
 			path = Util;
 			sourceTree = "<group>";
@@ -206,6 +213,7 @@
 				A66AE29B21D3DBD200A22B7A /* DatabaseService.swift */,
 				A631814F21D1749100D06532 /* FileSystemService.swift */,
 				A66AE2A021D4297000A22B7A /* DocumentService.swift */,
+				A66AE2B321D4805100A22B7A /* FileSystemError.swift */,
 			);
 			path = Service;
 			sourceTree = "<group>";
@@ -229,6 +237,7 @@
 				A631817221D1851400D06532 /* LoginRequest.swift */,
 				A631817621D1A26700D06532 /* XmlUtils.swift */,
 				A631817821D1A31300D06532 /* DocumentRequest.swift */,
+				A66AE2AF21D461A100A22B7A /* DocumentPartRequest.swift */,
 			);
 			path = Xml;
 			sourceTree = "<group>";
@@ -351,11 +360,14 @@
 				A631816E21D180A400D06532 /* LoginData.swift in Sources */,
 				A66AE2A821D43DAC00A22B7A /* SchemaDao.swift in Sources */,
 				A66AE2A121D4297000A22B7A /* DocumentService.swift in Sources */,
+				A66AE2B421D4805100A22B7A /* FileSystemError.swift in Sources */,
 				A66AE2A421D4353600A22B7A /* DatabaseError.swift in Sources */,
 				A631816521D17E7800D06532 /* Element.swift in Sources */,
 				A66AE2A621D435E900A22B7A /* DocumentDao.swift in Sources */,
 				A631815821D1767A00D06532 /* DocumentsViewController.swift in Sources */,
 				A66AE29C21D3DBD200A22B7A /* DatabaseService.swift in Sources */,
+				A66AE2B221D467B900A22B7A /* KeyUtils.swift in Sources */,
+				A66AE2B021D461A100A22B7A /* DocumentPartRequest.swift in Sources */,
 				A631812B21D1720C00D06532 /* RootController.swift in Sources */,
 				A631817021D1842300D06532 /* DokaService.swift in Sources */,
 				A66AE2AA21D444AB00A22B7A /* DocumentPartData.swift in Sources */,
