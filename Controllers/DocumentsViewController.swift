@@ -7,10 +7,13 @@
 //
 
 import UIKit
+import PDFKit
 
 class DocumentsViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
 
     private let LOGGER = Logger.getInstance()
+    
+    private var targetDocumentUrl: URL!
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return self.documents.count;
@@ -29,15 +32,47 @@ class DocumentsViewController: UIViewController, UITableViewDelegate, UITableVie
         LOGGER.debug(msg: "You selected cell #\(indexPath.row)")
         if let cell = tableView.cellForRow(at: indexPath) {
             LOGGER.debug(msg: "label=\(String(describing: cell.textLabel))")
+            
+            let targetDoc = documents[indexPath.row]
+            let docUrl = FileSystemService.getInstance().getDocumentsUrl().appendingPathComponent(targetDoc.fileName)
+            LOGGER.info(msg: "tagerUrl=\(docUrl.path)")
+            
+            // Add PDFView to view controller.
+            //let pdfView = PDFView(frame: self.view.bounds)
+            //pdfViewerView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+            //self.view.addSubview(pdfView)
+            
+            // Fit content in PDFView.
+            //pdfViewerView.autoScales = true
+            
+            // Load file
+            pdfViewerView.document = PDFDocument(url: docUrl)
+            
+            //self.performSegue(withIdentifier: Constants.SEGUE_SHOW_DOCUMENT_VIEWER, sender: self)
         }
     }
     
-    private var documents = [DocumentData]()
+    /*
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        
+        LOGGER.debug(msg: "prepareSegue: \(Constants.SEGUE_SHOW_DOCUMENT_VIEWER)")
+        
+        if segue.identifier == Constants.SEGUE_SHOW_DOCUMENT_VIEWER {
+            
+            LOGGER.debug(msg: "Setting document URL")
+            
+            let viewController = segue.destination as! DocumentViewController
+            
+            viewController.documentUrl = targetDocumentUrl
+        }
+    }
+ */
     
-    //private var dokaService: DokaService
+    private var documents = [DocumentData]()
     
     // MARK: UI
     @IBOutlet weak var tableView: UITableView!
+    @IBOutlet weak var pdfViewerView: PDFView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -47,6 +82,22 @@ class DocumentsViewController: UIViewController, UITableViewDelegate, UITableVie
         tableView.delegate = self
         tableView.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
         
+        getDocumentsFromServer()
+        
+        let checkForDocs: (Timer) -> Void = {
+            self.LOGGER.debug(msg: "Timer running getDocumentsFromServer")
+            _ = $0
+            self.getDocumentsFromServer()
+        }
+        
+        Timer.scheduledTimer(withTimeInterval: Constants.ACTIVITY_CHECK_FOR_DOCUMENTS_PERIOD, repeats: true, block: checkForDocs)
+        
+        LOGGER.info(msg: "💜 DocumentsViewController: timer started")
+
+    }
+    
+    private func getDocumentsFromServer() {
+     
         let dokaService = DokaService(sid: LoginController.sid)
         
         let onResult: (Array<DocumentData>) -> Void = {
@@ -60,8 +111,6 @@ class DocumentsViewController: UIViewController, UITableViewDelegate, UITableVie
                 self.documents.append(documentData)
                 
                 self.LOGGER.info(msg: "added document, label=\(documentData.label), docId=\(documentData.docId), fileRef=\(documentData.fileRef), totalPart=\(documentData.parts)")
-                
-                
                 
             }
             
@@ -79,16 +128,19 @@ class DocumentsViewController: UIViewController, UITableViewDelegate, UITableVie
                 // TODO
                 _ = DatabaseService.getInstance().insertDocument(document: newDoc)
             }
-
+            
             DispatchQueue.main.async{
                 self.tableView.reloadData()
             }
         }
- 
+        
         dokaService.getDocuments(onResult: onResult)
     }
     
-    func findNewDocuments(serverList: Array<DocumentData>, dbList: Array<DocumentData>) -> Array<DocumentData> {
+    /**
+     * Compare and check which douments are new.
+     */
+    private func findNewDocuments(serverList: Array<DocumentData>, dbList: Array<DocumentData>) -> Array<DocumentData> {
         
         var newDocs: Array<DocumentData> = []
         

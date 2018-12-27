@@ -13,7 +13,8 @@ class Constants: NSObject {
     static let ID_UNDEFINED = -1
     
     static let ACTIVITY_ADVANCE_TASKS = "com.efbware.activity.advanceTaks"
-    static let ACTIVITY_ADVANCE_TASKS_PERIOD = 15.0
+    static let ACTIVITY_ADVANCE_TASKS_PERIOD = 30.0
+    static let ACTIVITY_CHECK_FOR_DOCUMENTS_PERIOD = 10.0
     
     static let HEADER_SESSION_ID = "app-session-id"
     
@@ -36,4 +37,10 @@ class Constants: NSObject {
     static let HTTP_CONTENT_TYPE_XML = "application/xml"
     
     static let SEGUE_APP_TO_LOGIN = "appToLogin"
+    static let SEGUE_SHOW_DOCUMENT_VIEWER = "showDocumentViewer"
+    
+    static let CLOSURE_SORT_DOCUMENT_PARTS: (DocumentPartData, DocumentPartData) -> Bool = {
+        
+        return $0.partNumber < $1.partNumber
+    }
 }

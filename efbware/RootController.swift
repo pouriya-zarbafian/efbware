@@ -63,7 +63,7 @@ class RootController: UITabBarController {
         //advanceTasksTImer =
         Timer.scheduledTimer(withTimeInterval: Constants.ACTIVITY_ADVANCE_TASKS_PERIOD, repeats: true, block: runAdvanceTasks)
         
-        LOGGER.info(msg: "💜 Timer started")
+        LOGGER.info(msg: "💜 RootController: timer started")
     }
 
     override func viewDidAppear(_ animated: Bool) {

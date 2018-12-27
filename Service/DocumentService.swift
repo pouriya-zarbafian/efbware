@@ -75,7 +75,7 @@ class DocumentService: NSObject {
         else {
             LOGGER.debug(msg: "document found, id=\(document.id)")
             
-            let docParts = DatabaseService.getInstance().listDocumentParts(documentId: doc!.id, status: DocumentPartStatus.DONE)
+            let docParts = DatabaseService.getInstance().listDocumentParts(documentId: doc!.id, status: DocumentPartStatus.DONE).sorted(by: Constants.CLOSURE_SORT_DOCUMENT_PARTS)
             
             LOGGER.debug(msg: "document \(doc!.id), parts \(docParts.count) / \(document.parts)")
             
@@ -97,26 +97,39 @@ class DocumentService: NSObject {
                 
                 let documentUrl = fileSystemService.getDocumentsUrl().appendingPathComponent(document.fileName)
                 
+                LOGGER.info(msg: "Document output path: \(documentUrl.path)")
+                
                 do {
                     
-                    fileSystemService.createFile(file: documentUrl)
-                    
-                    let fileHandle = try FileHandle(forUpdating: documentUrl)
-                    
-                    LOGGER.debug(msg: "File handle acquired")
-                    
-                    for url in partsUrl {
-                        
-                        let partData = try Data(contentsOf: url)
-                        
-                        LOGGER.debug(msg: "Data read from: \(url)")
-                        
-                        fileHandle.seekToEndOfFile()
-                        fileHandle.write(partData)
-                        
-                        LOGGER.debug(msg: "Data writtent, source: \(url)")
+                    if fileSystemService.existFile(file: documentUrl.path) {
+                        LOGGER.info(msg: "❓ Document already exists, deleting it")
+                        try fileSystemService.delete(url: documentUrl)
+                        LOGGER.info(msg: "Document deleted")
                     }
-                    fileHandle.closeFile()
+                    else {
+                        LOGGER.info(msg: "Document does not exist")
+                    }
+                    
+                    do {
+                        let urlZero = partsUrl[0]
+                        
+                        var fullData: Data = try Data(contentsOf: urlZero)
+                        
+                        for partNum in 1..<partsUrl.count {
+                            
+                            let partData = try Data(contentsOf: partsUrl[partNum])
+                            fullData.append(partData)
+                        }
+                        
+                        try fullData.write(to: documentUrl)
+                        
+                        LOGGER.debug(msg: "💚 All data written to: \(documentUrl.path)")
+
+                    } catch {
+                        LOGGER.error(msg: "⛔ Could not acquire file handle: \(error.localizedDescription)")
+                        throw FileSystemError.cannotAcquireHandle(message: "Could not acquire file handle")
+                    }
+                    
                     
                     LOGGER.info(msg: "📄 Document is complete: \(documentUrl.path)")
                     
@@ -128,17 +141,18 @@ class DocumentService: NSObject {
                     
                 } catch {
                     LOGGER.error(msg: "Error writing to file: \(documentUrl.path)")
+                    // TODO
                     return
                 }
                 
                 let partFolderUrl = fileSystemService.getDocumentsUrl().appendingPathComponent(docKey)
                 
                 do {
-                    LOGGER.info(msg: "📂 Deleting parts folder")
+                    LOGGER.info(msg: "💙 Deleting parts folder")
                     
                     try fileSystemService.delete(url: partFolderUrl)
                     
-                    LOGGER.info(msg: "📂📂 Parts folder deleted")
+                    LOGGER.info(msg: "💙💙 Parts folder deleted")
                 }
                 catch {
                     LOGGER.error(msg: "Error deleting parts folder: \(partFolderUrl.path)")

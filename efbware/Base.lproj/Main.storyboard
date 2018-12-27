@@ -65,7 +65,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="vah-3V-U5a">
-                                <rect key="frame" x="294" y="349" width="246" height="98"/>
+                                <rect key="frame" x="294" y="261" width="246" height="50"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" red="0.16227715030029466" green="0.48780178961127679" blue="0.54461453045685282" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="31"/>
@@ -77,7 +77,7 @@
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="xhn-Au-IcZ">
-                                <rect key="frame" x="294" y="521" width="246" height="98"/>
+                                <rect key="frame" x="294" y="349" width="246" height="50"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" red="0.54461453045685282" green="0.057528413499969018" blue="0.24799356998227989" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="31"/>
@@ -89,7 +89,7 @@
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hke-dw-gqy">
-                                <rect key="frame" x="294" y="180" width="246" height="98"/>
+                                <rect key="frame" x="294" y="180" width="246" height="50"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" red="0.1112244166" green="0.12969138629999999" blue="0.54461453049999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="31"/>
@@ -111,11 +111,54 @@
                                     <action selector="resetAppDirButton:" destination="Pxz-bf-rou" eventType="touchUpInside" id="Zyc-rM-pkE"/>
                                 </connections>
                             </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ddB-SW-Cnj">
+                                <rect key="frame" x="294" y="439" width="246" height="50"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" red="1" green="0.67819223100153425" blue="0.20848533280051695" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="31"/>
+                                <state key="normal" title="PARTS">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                </state>
+                                <connections>
+                                    <action selector="listDocsButton:" destination="Pxz-bf-rou" eventType="touchUpInside" id="VxH-01-AJ5"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="iri-dj-UZO">
+                                <rect key="frame" x="606" y="439" width="50" height="50"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" red="1" green="0.160423171" blue="0.18686168280000001" alpha="1" colorSpace="calibratedRGB"/>
+                                <state key="normal" title="DOCS">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                </state>
+                                <connections>
+                                    <action selector="deleteDocumentsButton:" destination="Pxz-bf-rou" eventType="touchUpInside" id="TqC-1N-YLP"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Pdf-xo-quH">
+                                <rect key="frame" x="182" y="439" width="50" height="50"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" red="0.1947699859" green="1" blue="0.36160996909999998" alpha="1" colorSpace="calibratedRGB"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="31"/>
+                                <state key="normal" title="M">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                </state>
+                                <connections>
+                                    <action selector="manualFinishButton:" destination="Pxz-bf-rou" eventType="touchUpInside" id="Jh0-op-l2K"/>
+                                </connections>
+                            </button>
+                            <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="vEX-KL-Xn0">
+                                <rect key="frame" x="537" y="528" width="240" height="294"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            </view>
                         </subviews>
                         <color key="backgroundColor" red="0.71372549019999998" green="0.66274509800000003" blue="0.55294117649999996" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <viewLayoutGuide key="safeArea" id="jM1-z2-c6e"/>
                     </view>
                     <tabBarItem key="tabBarItem" title="SETTINGS" id="Ouy-VL-JIK"/>
+                    <connections>
+                        <outlet property="pdfView" destination="vEX-KL-Xn0" id="0F0-p7-4Ut"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="zFe-x4-ioK" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -129,23 +172,24 @@
                         <rect key="frame" x="0.0" y="0.0" width="834" height="1194"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="Ptn-pY-TOc">
-                                <rect key="frame" x="20" y="44" width="794" height="829"/>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="0aq-BV-Ltp">
+                                <rect key="frame" x="20" y="39" width="794" height="128"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             </tableView>
+                            <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="djx-um-wMo" customClass="PDFView">
+                                <rect key="frame" x="20" y="220" width="794" height="872"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            </view>
                         </subviews>
                         <color key="backgroundColor" red="0.93252300129999999" green="0.86687131179999999" blue="0.71508058610000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                        <constraints>
-                            <constraint firstItem="qZZ-2N-iA6" firstAttribute="bottom" secondItem="Ptn-pY-TOc" secondAttribute="bottom" constant="256" id="0Xl-Ne-hVh"/>
-                            <constraint firstItem="qZZ-2N-iA6" firstAttribute="trailing" secondItem="Ptn-pY-TOc" secondAttribute="trailing" constant="20" id="4ih-Lm-QL7"/>
-                            <constraint firstItem="Ptn-pY-TOc" firstAttribute="top" secondItem="qZZ-2N-iA6" secondAttribute="top" constant="20" id="DlO-go-Uxi"/>
-                            <constraint firstItem="Ptn-pY-TOc" firstAttribute="leading" secondItem="qZZ-2N-iA6" secondAttribute="leading" constant="20" id="Dtm-eT-vyB"/>
-                        </constraints>
                         <viewLayoutGuide key="safeArea" id="qZZ-2N-iA6"/>
                     </view>
                     <tabBarItem key="tabBarItem" title="DOCUMENTS" id="49k-2M-Z6O"/>
                     <connections>
-                        <outlet property="tableView" destination="Ptn-pY-TOc" id="SrC-GV-gHt"/>
+                        <outlet property="pdfViewerView" destination="djx-um-wMo" id="mEP-yz-kd8"/>
+                        <outlet property="tableView" destination="0aq-BV-Ltp" id="3wZ-o9-hh9"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="hvJ-3j-y8e" userLabel="First Responder" sceneMemberID="firstResponder"/>
