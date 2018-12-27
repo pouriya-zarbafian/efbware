@@ -12,6 +12,8 @@ import CoreData
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
+    let LOGGER = Logger.getInstance()
+    
     var window: UIWindow?
 
 
@@ -42,6 +44,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
         // Saves changes in the application's managed object context before the application terminates.
         self.saveContext()
+        
+        LOGGER.info(msg: "App has terminated")
     }
 
     // MARK: - Core Data stack

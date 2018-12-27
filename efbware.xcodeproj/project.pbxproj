@@ -34,6 +34,8 @@
 		A631817921D1A31300D06532 /* DocumentRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = A631817821D1A31300D06532 /* DocumentRequest.swift */; };
 		A631817B21D1A34000D06532 /* DocumentRequestData.swift in Sources */ = {isa = PBXBuildFile; fileRef = A631817A21D1A34000D06532 /* DocumentRequestData.swift */; };
 		A631817D21D1B2E100D06532 /* DocumentData.swift in Sources */ = {isa = PBXBuildFile; fileRef = A631817C21D1B2E100D06532 /* DocumentData.swift */; };
+		A64813B921D56703006AEDD4 /* ConnectionPool.swift in Sources */ = {isa = PBXBuildFile; fileRef = A64813B821D56703006AEDD4 /* ConnectionPool.swift */; };
+		A64813BB21D567DF006AEDD4 /* DatabaseConnection.swift in Sources */ = {isa = PBXBuildFile; fileRef = A64813BA21D567DF006AEDD4 /* DatabaseConnection.swift */; };
 		A66AE29C21D3DBD200A22B7A /* DatabaseService.swift in Sources */ = {isa = PBXBuildFile; fileRef = A66AE29B21D3DBD200A22B7A /* DatabaseService.swift */; };
 		A66AE29E21D3FA7F00A22B7A /* DocumentStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = A66AE29D21D3FA7F00A22B7A /* DocumentStatus.swift */; };
 		A66AE2A121D4297000A22B7A /* DocumentService.swift in Sources */ = {isa = PBXBuildFile; fileRef = A66AE2A021D4297000A22B7A /* DocumentService.swift */; };
@@ -91,6 +93,8 @@
 		A631817821D1A31300D06532 /* DocumentRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DocumentRequest.swift; sourceTree = "<group>"; };
 		A631817A21D1A34000D06532 /* DocumentRequestData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DocumentRequestData.swift; sourceTree = "<group>"; };
 		A631817C21D1B2E100D06532 /* DocumentData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DocumentData.swift; sourceTree = "<group>"; };
+		A64813B821D56703006AEDD4 /* ConnectionPool.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConnectionPool.swift; sourceTree = "<group>"; };
+		A64813BA21D567DF006AEDD4 /* DatabaseConnection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatabaseConnection.swift; sourceTree = "<group>"; };
 		A66AE29B21D3DBD200A22B7A /* DatabaseService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DatabaseService.swift; sourceTree = "<group>"; };
 		A66AE29D21D3FA7F00A22B7A /* DocumentStatus.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DocumentStatus.swift; sourceTree = "<group>"; };
 		A66AE2A021D4297000A22B7A /* DocumentService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DocumentService.swift; sourceTree = "<group>"; };
@@ -249,6 +253,8 @@
 				A66AE2A521D435E900A22B7A /* DocumentDao.swift */,
 				A66AE2A721D43DAC00A22B7A /* SchemaDao.swift */,
 				A66AE2AD21D446E200A22B7A /* DocumentPartDao.swift */,
+				A64813B821D56703006AEDD4 /* ConnectionPool.swift */,
+				A64813BA21D567DF006AEDD4 /* DatabaseConnection.swift */,
 			);
 			path = Dao;
 			sourceTree = "<group>";
@@ -359,10 +365,12 @@
 				A631817321D1851400D06532 /* LoginRequest.swift in Sources */,
 				A631816E21D180A400D06532 /* LoginData.swift in Sources */,
 				A66AE2A821D43DAC00A22B7A /* SchemaDao.swift in Sources */,
+				A64813BB21D567DF006AEDD4 /* DatabaseConnection.swift in Sources */,
 				A66AE2A121D4297000A22B7A /* DocumentService.swift in Sources */,
 				A66AE2B421D4805100A22B7A /* FileSystemError.swift in Sources */,
 				A66AE2A421D4353600A22B7A /* DatabaseError.swift in Sources */,
 				A631816521D17E7800D06532 /* Element.swift in Sources */,
+				A64813B921D56703006AEDD4 /* ConnectionPool.swift in Sources */,
 				A66AE2A621D435E900A22B7A /* DocumentDao.swift in Sources */,
 				A631815821D1767A00D06532 /* DocumentsViewController.swift in Sources */,
 				A66AE29C21D3DBD200A22B7A /* DatabaseService.swift in Sources */,

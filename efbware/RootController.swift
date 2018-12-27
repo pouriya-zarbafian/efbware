@@ -46,6 +46,7 @@ class RootController: UITabBarController {
             var completeDocs = DatabaseService.getInstance().listDocumentsByStatus(status: DocumentStatus.BUILDING)
             print("found \(completeDocs.count) potential documents with state \(DocumentStatus.BUILDING)")
             
+            //
             
             for doc in completeDocs {
                 docService.checkBuildingDocument(document: doc)

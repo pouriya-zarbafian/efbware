@@ -211,6 +211,6 @@ class DocumentService: NSObject {
 
         LOGGER.debug(msg: "XML\n\(xml)")
         
-        self.httpService.download(url: Constants.URL_READ_PART, xml: xml, onSuccess: successClosure, onError: errorClosure)
+        self.httpService.post(url: Constants.URL_READ_PART, xml: xml, onSuccess: successClosure, onError: errorClosure)
     }
 }

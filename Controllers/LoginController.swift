@@ -37,7 +37,7 @@ class LoginController: UIViewController {
                 self.LOGGER.debug(msg: "Could not login from sid")
                 LoginController.sid = ""
             }
-            let successClosure: (HTTPURLResponse, String) -> Void = {
+            let successClosure: (HTTPURLResponse, Data) -> Void = {
                 // Sid was valid
                 self.LOGGER.debug(msg: "Logged in from sid")
                 let sid = $0.allHeaderFields[Constants.HEADER_SESSION_ID] as! String
@@ -70,7 +70,7 @@ class LoginController: UIViewController {
             let xml = LoginRequest.toXml(loginData: loginData)
             print("XML\n\(xml)")
             
-            let successClosure: (HTTPURLResponse, String) -> Void = {
+            let successClosure: (HTTPURLResponse, Data) -> Void = {
                 let sid = $0.allHeaderFields[Constants.HEADER_SESSION_ID] as! String
                 _ = $1
                 self.LOGGER.info(msg: "Login successful, sid=\(sid)")

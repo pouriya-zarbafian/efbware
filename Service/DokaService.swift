@@ -28,9 +28,9 @@ class DokaService: NSObject {
         
         LOGGER.debug(msg: "XML\n\(xml)")
         
-        let successClosure: (HTTPURLResponse, String) -> Void = {
+        let successClosure: (HTTPURLResponse, Data) -> Void = {
  
-            let xml = $1
+            let xml = String(data: $1, encoding: .utf8)!
             
             self.LOGGER.info(msg: "documents retrieved, xml=\n\(xml)")
             
