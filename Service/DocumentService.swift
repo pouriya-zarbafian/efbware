@@ -23,6 +23,15 @@ class DocumentService: NSObject {
         }
         else {
             LOGGER.debug(msg: "document found, id=\(document.id)")
+            
+            for partNumber in 0..<document.parts {
+                let part = DocumentPartData(partNumber: partNumber, documentId: document.id)
+                _ = DatabaseService.getInstance().insertDocumentPart(part: part)
+            }
+            
+            doc!.status = DocumentStatus.BUILDING
+            
+            _ = DatabaseService.getInstance().updateDocument(document: doc!)
         }
     }
 }

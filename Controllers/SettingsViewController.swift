@@ -89,6 +89,13 @@ class SettingsViewController: UIViewController {
         let documents = DatabaseService.getInstance().listAllDocuments()
         for doc in documents {
             LOGGER.debug(msg: "found document, id=\(doc.id), label=\(doc.label), fileName=\(doc.fileName) docId=\(doc.docId), fileRef=\(doc.fileRef), parts=\(doc.parts), status=\(doc.status)")
+            LOGGER.debug(msg: "_")
+            
+            let parts = DatabaseService.getInstance().listDocumentParts(documentId: doc.id)
+            for part in parts {
+                LOGGER.debug(msg: "  found part, id=\(part.id), documentId=\(part.documentId), partNumber=\(part.partNumber), status=\(part.status)")
+            }
+            LOGGER.debug(msg: "___")
         }
         
     }

@@ -40,6 +40,9 @@
 		A66AE2A421D4353600A22B7A /* DatabaseError.swift in Sources */ = {isa = PBXBuildFile; fileRef = A66AE2A321D4353600A22B7A /* DatabaseError.swift */; };
 		A66AE2A621D435E900A22B7A /* DocumentDao.swift in Sources */ = {isa = PBXBuildFile; fileRef = A66AE2A521D435E900A22B7A /* DocumentDao.swift */; };
 		A66AE2A821D43DAC00A22B7A /* SchemaDao.swift in Sources */ = {isa = PBXBuildFile; fileRef = A66AE2A721D43DAC00A22B7A /* SchemaDao.swift */; };
+		A66AE2AA21D444AB00A22B7A /* DocumentPartData.swift in Sources */ = {isa = PBXBuildFile; fileRef = A66AE2A921D444AB00A22B7A /* DocumentPartData.swift */; };
+		A66AE2AC21D4456A00A22B7A /* DocumentPartStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = A66AE2AB21D4456A00A22B7A /* DocumentPartStatus.swift */; };
+		A66AE2AE21D446E200A22B7A /* DocumentPartDao.swift in Sources */ = {isa = PBXBuildFile; fileRef = A66AE2AD21D446E200A22B7A /* DocumentPartDao.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -91,6 +94,9 @@
 		A66AE2A321D4353600A22B7A /* DatabaseError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatabaseError.swift; sourceTree = "<group>"; };
 		A66AE2A521D435E900A22B7A /* DocumentDao.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DocumentDao.swift; sourceTree = "<group>"; };
 		A66AE2A721D43DAC00A22B7A /* SchemaDao.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SchemaDao.swift; sourceTree = "<group>"; };
+		A66AE2A921D444AB00A22B7A /* DocumentPartData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DocumentPartData.swift; sourceTree = "<group>"; };
+		A66AE2AB21D4456A00A22B7A /* DocumentPartStatus.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DocumentPartStatus.swift; sourceTree = "<group>"; };
+		A66AE2AD21D446E200A22B7A /* DocumentPartDao.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DocumentPartDao.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -210,7 +216,9 @@
 				A631816D21D180A400D06532 /* LoginData.swift */,
 				A631817A21D1A34000D06532 /* DocumentRequestData.swift */,
 				A631817C21D1B2E100D06532 /* DocumentData.swift */,
+				A66AE2A921D444AB00A22B7A /* DocumentPartData.swift */,
 				A66AE29D21D3FA7F00A22B7A /* DocumentStatus.swift */,
+				A66AE2AB21D4456A00A22B7A /* DocumentPartStatus.swift */,
 			);
 			path = Data;
 			sourceTree = "<group>";
@@ -231,6 +239,7 @@
 				A66AE2A321D4353600A22B7A /* DatabaseError.swift */,
 				A66AE2A521D435E900A22B7A /* DocumentDao.swift */,
 				A66AE2A721D43DAC00A22B7A /* SchemaDao.swift */,
+				A66AE2AD21D446E200A22B7A /* DocumentPartDao.swift */,
 			);
 			path = Dao;
 			sourceTree = "<group>";
@@ -349,9 +358,11 @@
 				A66AE29C21D3DBD200A22B7A /* DatabaseService.swift in Sources */,
 				A631812B21D1720C00D06532 /* RootController.swift in Sources */,
 				A631817021D1842300D06532 /* DokaService.swift in Sources */,
+				A66AE2AA21D444AB00A22B7A /* DocumentPartData.swift in Sources */,
 				A631815C21D176A200D06532 /* SettingsViewController.swift in Sources */,
 				A631817521D1978200D06532 /* HttpService.swift in Sources */,
 				A631815121D1749100D06532 /* FileSystemService.swift in Sources */,
+				A66AE2AC21D4456A00A22B7A /* DocumentPartStatus.swift in Sources */,
 				A631812921D1720C00D06532 /* AppDelegate.swift in Sources */,
 				A631817D21D1B2E100D06532 /* DocumentData.swift in Sources */,
 				A66AE29E21D3FA7F00A22B7A /* DocumentStatus.swift in Sources */,
@@ -360,6 +371,7 @@
 				A631817B21D1A34000D06532 /* DocumentRequestData.swift in Sources */,
 				A631817921D1A31300D06532 /* DocumentRequest.swift in Sources */,
 				A631815021D1749100D06532 /* Logger.swift in Sources */,
+				A66AE2AE21D446E200A22B7A /* DocumentPartDao.swift in Sources */,
 				A631817721D1A26700D06532 /* XmlUtils.swift in Sources */,
 				A631815321D1751700D06532 /* Constants.swift in Sources */,
 				A631816721D17E7800D06532 /* Error.swift in Sources */,

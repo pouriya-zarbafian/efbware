@@ -20,8 +20,9 @@ class DatabaseService: NSObject {
     
     private var fileSystemService = FileSystemService.getInstance()
     
-    private var documentDao: DocumentDao
     private var schemaDao: SchemaDao
+    private var documentDao: DocumentDao
+    private var documentPartDao: DocumentPartDao
     
     let dbDirUrl: URL
     let dbFileUrl: URL
@@ -37,8 +38,9 @@ class DatabaseService: NSObject {
         
         dbDirUrl = appDbUrl
         dbFileUrl = dbDirUrl.appendingPathComponent(Constants.FILE_DATABASE)
-        documentDao = DocumentDao(databaseFileUrl: dbFileUrl)
         schemaDao = SchemaDao(databaseFileUrl: dbFileUrl)
+        documentDao = DocumentDao(databaseFileUrl: dbFileUrl)
+        documentPartDao = DocumentPartDao(databaseFileUrl: dbFileUrl)
         
         super.init()
         
@@ -89,7 +91,20 @@ class DatabaseService: NSObject {
     func insertDocument(document: DocumentData) -> DocumentData? {
         
         do {
-            return try self.documentDao.createDocument(document: document)
+            return try self.documentDao.create(document: document)
+        }
+        catch {
+            return nil
+        }
+    }
+    
+    /**
+     * Update a document in the local database
+     */
+    func updateDocument(document: DocumentData) -> DocumentData? {
+        
+        do {
+            return try self.documentDao.update(document: document)
         }
         catch {
             return nil
@@ -131,5 +146,30 @@ class DatabaseService: NSObject {
         catch {
             return []
         }
-    }    
+    }
+    
+    /**
+     * Insert a document part in the local database
+     */
+    func insertDocumentPart(part: DocumentPartData) -> DocumentPartData? {
+        
+        do {
+            return try self.documentPartDao.create(part: part)
+        }
+        catch {
+            return nil
+        }
+    }
+    
+    /**
+     * List all documents parts for a documents
+     */
+    func listDocumentParts(documentId: Int) -> Array<DocumentPartData> {
+        do {
+            return try self.documentPartDao.listNewParts(document: documentId)
+        }
+        catch {
+            return []
+        }
+    }
 }

@@ -26,7 +26,7 @@ class DocumentDao: NSObject {
     /**
      * Insert a document in the local database
      */
-    func createDocument(document: DocumentData) throws -> DocumentData {
+    func create(document: DocumentData) throws -> DocumentData {
         
         // open database
         var db: OpaquePointer?
@@ -41,7 +41,7 @@ class DocumentDao: NSObject {
         // insert data
         var statement: OpaquePointer?
         
-        if sqlite3_prepare_v2(db, "insert into document (label, file_name, doc_id, file_ref, parts, status) values (?, ?, ?, ?, ?, ?)", -1, &statement, nil) != SQLITE_OK {
+        if sqlite3_prepare_v2(db, "INSERT INTO document (label, file_name, doc_id, file_ref, parts, status) VALUES (?, ?, ?, ?, ?, ?)", -1, &statement, nil) != SQLITE_OK {
             let errmsg = String(cString: sqlite3_errmsg(db)!)
             LOGGER.error(msg: "Error preparing insert: \(errmsg)")
             throw DatabaseError.sqlError(message: "Error prepare: \(errmsg)")
@@ -108,6 +108,70 @@ class DocumentDao: NSObject {
         db = nil
         
         LOGGER.info(msg: "Document inserted, id=\(document.id), fileName=\(document.fileName), label=\(document.label), docId=\(document.docId), fileRef=\(document.fileRef), parts=\(document.parts), status=\(document.status)")
+        
+        return document
+    }
+    
+    /**
+     * Update a document
+     */
+    func update(document: DocumentData) throws -> DocumentData {
+        
+        // open database
+        var db: OpaquePointer?
+        if sqlite3_open(dbFileUrl.path, &db) != SQLITE_OK {
+            LOGGER.error(msg: "Error opening database")
+            throw DatabaseError.connectionError(message: "Cannot open database")
+        }
+        else {
+            LOGGER.debug(msg: "Database connection successful")
+        }
+        
+        // insert data
+        var statement: OpaquePointer?
+        
+        if sqlite3_prepare_v2(db, "UPDATE document SET status = ? WHERE id = ?", -1, &statement, nil) != SQLITE_OK {
+            let errmsg = String(cString: sqlite3_errmsg(db)!)
+            LOGGER.error(msg: "Error preparing insert: \(errmsg)")
+            throw DatabaseError.sqlError(message: "Error prepare: \(errmsg)")
+        }
+        
+        // update
+        // bind status
+        if sqlite3_bind_text(statement, 1, document.status, -1, SQLITE_TRANSIENT) != SQLITE_OK {
+            let errmsg = String(cString: sqlite3_errmsg(db)!)
+            LOGGER.error(msg: "failure binding status: \(errmsg)")
+            throw DatabaseError.sqlError(message: "Error binding: \(errmsg)")
+        }
+        // bind document id
+        if sqlite3_bind_int64(statement, 2, sqlite3_int64(document.id)) != SQLITE_OK {
+            let errmsg = String(cString: sqlite3_errmsg(db)!)
+            LOGGER.error(msg: "failure binding doc id: \(errmsg)")
+            throw DatabaseError.sqlError(message: "Error binding: \(errmsg)")
+        }
+        
+        if sqlite3_step(statement) != SQLITE_DONE {
+            let errmsg = String(cString: sqlite3_errmsg(db)!)
+            LOGGER.error(msg: "Error while updating document: \(errmsg)")
+            throw DatabaseError.sqlError(message: "Error while updating document: \(errmsg)")
+        }
+        
+        // finalize
+        if sqlite3_finalize(statement) != SQLITE_OK {
+            let errmsg = String(cString: sqlite3_errmsg(db)!)
+            LOGGER.error(msg: "error finalizing prepared statement: \(errmsg)")
+        }
+        
+        statement = nil
+        
+        // close database
+        if sqlite3_close(db) != SQLITE_OK {
+            LOGGER.error(msg: "error closing database")
+        }
+        
+        db = nil
+        
+        LOGGER.info(msg: "Document updated, id=\(document.id), status=\(document.status)")
         
         return document
     }
