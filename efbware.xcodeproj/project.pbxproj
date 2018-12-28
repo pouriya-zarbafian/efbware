@@ -48,6 +48,11 @@
 		A66AE2B021D461A100A22B7A /* DocumentPartRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = A66AE2AF21D461A100A22B7A /* DocumentPartRequest.swift */; };
 		A66AE2B221D467B900A22B7A /* KeyUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = A66AE2B121D467B900A22B7A /* KeyUtils.swift */; };
 		A66AE2B421D4805100A22B7A /* FileSystemError.swift in Sources */ = {isa = PBXBuildFile; fileRef = A66AE2B321D4805100A22B7A /* FileSystemError.swift */; };
+		A6C8ECEC21D6936C00EAA036 /* SqlType.swift in Sources */ = {isa = PBXBuildFile; fileRef = A6C8ECEB21D6936C00EAA036 /* SqlType.swift */; };
+		A6C8ECEF21D6BCA400EAA036 /* SelectDocument.swift in Sources */ = {isa = PBXBuildFile; fileRef = A6C8ECEE21D6BCA400EAA036 /* SelectDocument.swift */; };
+		A6C8ECF121D6C9D400EAA036 /* SelectDocumentPart.swift in Sources */ = {isa = PBXBuildFile; fileRef = A6C8ECF021D6C9D400EAA036 /* SelectDocumentPart.swift */; };
+		A6C8ECF321D6CD9300EAA036 /* CreateTables.swift in Sources */ = {isa = PBXBuildFile; fileRef = A6C8ECF221D6CD9300EAA036 /* CreateTables.swift */; };
+		A6F049E221D58CF0000C3C0C /* SdbcTemplate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A6F049E121D58CF0000C3C0C /* SdbcTemplate.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -107,6 +112,11 @@
 		A66AE2AF21D461A100A22B7A /* DocumentPartRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DocumentPartRequest.swift; sourceTree = "<group>"; };
 		A66AE2B121D467B900A22B7A /* KeyUtils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyUtils.swift; sourceTree = "<group>"; };
 		A66AE2B321D4805100A22B7A /* FileSystemError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileSystemError.swift; sourceTree = "<group>"; };
+		A6C8ECEB21D6936C00EAA036 /* SqlType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SqlType.swift; sourceTree = "<group>"; };
+		A6C8ECEE21D6BCA400EAA036 /* SelectDocument.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectDocument.swift; sourceTree = "<group>"; };
+		A6C8ECF021D6C9D400EAA036 /* SelectDocumentPart.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectDocumentPart.swift; sourceTree = "<group>"; };
+		A6C8ECF221D6CD9300EAA036 /* CreateTables.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateTables.swift; sourceTree = "<group>"; };
+		A6F049E121D58CF0000C3C0C /* SdbcTemplate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SdbcTemplate.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -130,6 +140,7 @@
 		A631811C21D1720C00D06532 = {
 			isa = PBXGroup;
 			children = (
+				A6F049E021D58CCB000C3C0C /* Sdbc */,
 				A66AE2A221D434E400A22B7A /* Dao */,
 				A631817121D1850400D06532 /* Xml */,
 				A631816C21D1809A00D06532 /* Data */,
@@ -249,14 +260,34 @@
 		A66AE2A221D434E400A22B7A /* Dao */ = {
 			isa = PBXGroup;
 			children = (
-				A66AE2A321D4353600A22B7A /* DatabaseError.swift */,
+				A6C8ECED21D6BC8700EAA036 /* Sql */,
 				A66AE2A521D435E900A22B7A /* DocumentDao.swift */,
 				A66AE2A721D43DAC00A22B7A /* SchemaDao.swift */,
 				A66AE2AD21D446E200A22B7A /* DocumentPartDao.swift */,
-				A64813B821D56703006AEDD4 /* ConnectionPool.swift */,
-				A64813BA21D567DF006AEDD4 /* DatabaseConnection.swift */,
 			);
 			path = Dao;
+			sourceTree = "<group>";
+		};
+		A6C8ECED21D6BC8700EAA036 /* Sql */ = {
+			isa = PBXGroup;
+			children = (
+				A6C8ECEE21D6BCA400EAA036 /* SelectDocument.swift */,
+				A6C8ECF021D6C9D400EAA036 /* SelectDocumentPart.swift */,
+				A6C8ECF221D6CD9300EAA036 /* CreateTables.swift */,
+			);
+			path = Sql;
+			sourceTree = "<group>";
+		};
+		A6F049E021D58CCB000C3C0C /* Sdbc */ = {
+			isa = PBXGroup;
+			children = (
+				A6F049E121D58CF0000C3C0C /* SdbcTemplate.swift */,
+				A6C8ECEB21D6936C00EAA036 /* SqlType.swift */,
+				A64813BA21D567DF006AEDD4 /* DatabaseConnection.swift */,
+				A64813B821D56703006AEDD4 /* ConnectionPool.swift */,
+				A66AE2A321D4353600A22B7A /* DatabaseError.swift */,
+			);
+			path = Sdbc;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -362,6 +393,7 @@
 			files = (
 				A631813121D1720C00D06532 /* efbware.xcdatamodeld in Sources */,
 				A631816421D17E7800D06532 /* Parser.swift in Sources */,
+				A6C8ECF321D6CD9300EAA036 /* CreateTables.swift in Sources */,
 				A631817321D1851400D06532 /* LoginRequest.swift in Sources */,
 				A631816E21D180A400D06532 /* LoginData.swift in Sources */,
 				A66AE2A821D43DAC00A22B7A /* SchemaDao.swift in Sources */,
@@ -381,8 +413,11 @@
 				A66AE2AA21D444AB00A22B7A /* DocumentPartData.swift in Sources */,
 				A631815C21D176A200D06532 /* SettingsViewController.swift in Sources */,
 				A631817521D1978200D06532 /* HttpService.swift in Sources */,
+				A6F049E221D58CF0000C3C0C /* SdbcTemplate.swift in Sources */,
+				A6C8ECEF21D6BCA400EAA036 /* SelectDocument.swift in Sources */,
 				A631815121D1749100D06532 /* FileSystemService.swift in Sources */,
 				A66AE2AC21D4456A00A22B7A /* DocumentPartStatus.swift in Sources */,
+				A6C8ECF121D6C9D400EAA036 /* SelectDocumentPart.swift in Sources */,
 				A631812921D1720C00D06532 /* AppDelegate.swift in Sources */,
 				A631817D21D1B2E100D06532 /* DocumentData.swift in Sources */,
 				A66AE29E21D3FA7F00A22B7A /* DocumentStatus.swift in Sources */,
@@ -391,6 +426,7 @@
 				A631817B21D1A34000D06532 /* DocumentRequestData.swift in Sources */,
 				A631817921D1A31300D06532 /* DocumentRequest.swift in Sources */,
 				A631815021D1749100D06532 /* Logger.swift in Sources */,
+				A6C8ECEC21D6936C00EAA036 /* SqlType.swift in Sources */,
 				A66AE2AE21D446E200A22B7A /* DocumentPartDao.swift in Sources */,
 				A631817721D1A26700D06532 /* XmlUtils.swift in Sources */,
 				A631815321D1751700D06532 /* Constants.swift in Sources */,

@@ -19,6 +19,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
+        
         return true
     }
 
@@ -45,7 +46,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Saves changes in the application's managed object context before the application terminates.
         self.saveContext()
         
-        LOGGER.info(msg: "App has terminated")
+        // close database connection
+        ConnectionPool.close()
+        
+        LOGGER.info(msg: "Connection pool closed")
     }
 
     // MARK: - Core Data stack

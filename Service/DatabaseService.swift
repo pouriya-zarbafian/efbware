@@ -24,72 +24,17 @@ class DatabaseService: NSObject {
     private var documentDao: DocumentDao
     private var documentPartDao: DocumentPartDao
     
-    let dbDirUrl: URL
-    let dbFileUrl: URL
-    
     static func getInstance() -> DatabaseService {
         return instance
     }
     
     override private init() {
-        
-        var appDbUrl = URL(fileURLWithPath: fileSystemService.appDirUrl.path, isDirectory: true)
-        appDbUrl.appendPathComponent(Constants.DIR_DATABASE)
-        
-        dbDirUrl = appDbUrl
-        dbFileUrl = dbDirUrl.appendingPathComponent(Constants.FILE_DATABASE)
-        schemaDao = SchemaDao(databaseFileUrl: dbFileUrl)
-        documentDao = DocumentDao(databaseFileUrl: dbFileUrl)
-        documentPartDao = DocumentPartDao(databaseFileUrl: dbFileUrl)
+
+        schemaDao = SchemaDao()
+        documentDao = DocumentDao()
+        documentPartDao = DocumentPartDao()
         
         super.init()
-        
-        initDatabaseDir(dataDir: dbDirUrl)
-        
-        initDatabaseSchema()
-        
-    }
-    
-    func databaseFileUrl() -> URL {
-        return dbDirUrl.appendingPathComponent(Constants.FILE_DATABASE)
-    }
-    
-    private func initDatabaseDir(dataDir: URL) {
-        
-        if(fileSystemService.existDir(dir: dataDir.path)) {
-            LOGGER.info(msg: "dir found: \(dataDir.path)")
-        }
-        else {
-            LOGGER.info(msg: "Creating database diretory, dir=\(dataDir.path)")
-            
-            do {
-                try fileSystemService.createDir(dir: dataDir)
-            } catch {
-                LOGGER.error(msg: "Error creating database diretory")
-                return
-            }
-            
-            LOGGER.info(msg: "Database directory created")
-        }
-    }
-
-    private func initDatabaseSchema() {
-        
-        if fileSystemService.existFile(file: dbFileUrl.path) {
-            
-            LOGGER.info(msg: "Database file found")
-            
-        }
-        else {
-            
-            LOGGER.info(msg: "Database file not found, create tables")
-            
-            do {
-                try schemaDao.createTable()
-            } catch {
-                LOGGER.error(msg: "Could not initialize schema")
-            }
-        }
     }
     
     /**

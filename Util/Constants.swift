@@ -13,7 +13,7 @@ class Constants: NSObject {
     static let ID_UNDEFINED = -1
     
     static let ACTIVITY_ADVANCE_TASKS = "com.efbware.activity.advanceTaks"
-    static let ACTIVITY_ADVANCE_TASKS_PERIOD = 30.0
+    static let ACTIVITY_ADVANCE_TASKS_PERIOD = 15.0
     static let ACTIVITY_CHECK_FOR_DOCUMENTS_PERIOD = 10.0
     
     static let HEADER_SESSION_ID = "app-session-id"
