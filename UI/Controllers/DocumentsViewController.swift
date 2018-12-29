@@ -35,19 +35,21 @@ class DocumentsViewController: UIViewController, UITableViewDelegate, UITableVie
         let curDoc = self.documents[indexPath.row]
         cell.labelCell?.text = curDoc.label + "- CUSTOM - " + curDoc.status
         
-        // TODO: replace with icons
-        let color: UIColor
+        
+        var loadingImage: UIImage!
+        
         switch curDoc.status {
         case DocumentStatus.NEW:
-            color = UIColor.red
+            loadingImage = UIImage(named: "empty")
         case DocumentStatus.BUILDING:
-            color = UIColor.yellow
+            loadingImage = UIImage.gifImageWithName("loading")
         case DocumentStatus.COMPLETE:
-            color = UIColor.green
+            loadingImage = UIImage(named: "ready")
         default:
-            color = UIColor.black
+            loadingImage = UIImage(named: "error")
         }
-        cell.iconCell?.backgroundColor = color
+
+        cell.iconCell.image = loadingImage
         
         return cell
     }
