@@ -59,12 +59,17 @@ class DocumentsViewController: UIViewController, UITableViewDelegate, UITableVie
         tableView.delegate = self
         tableView.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
         
-        getDocumentsFromServer()
+        // load local documents
+        let dbDocs = getDocumentsFromDb()
+        documents.removeAll()
+        for dbDoc in dbDocs {
+            self.documents.append(dbDoc)
+        }
         
         let checkForDocs: (Timer) -> Void = {
             self.LOGGER.debug(msg: "Timer running getDocumentsFromServer")
             _ = $0
-            self.getDocumentsFromServer()
+            self.checkDocumentsFromServer()
         }
         
         Timer.scheduledTimer(withTimeInterval: Constants.ACTIVITY_CHECK_FOR_DOCUMENTS_PERIOD, repeats: true, block: checkForDocs)
@@ -75,11 +80,10 @@ class DocumentsViewController: UIViewController, UITableViewDelegate, UITableVie
     
     private func getDocumentsFromDb() -> [DocumentData] {
         
-        // TODO
-        return []
+        return databaseService.listAllDocuments()
     }
     
-    private func getDocumentsFromServer() {
+    private func checkDocumentsFromServer() {
      
         let dokaService = DokaService(sid: LoginController.sid)
         
@@ -87,29 +91,27 @@ class DocumentsViewController: UIViewController, UITableViewDelegate, UITableVie
             
             self.LOGGER.info(msg: "DocumentsViewController.onResults, size=\($0.count)")
             
-            self.documents.removeAll()
-            
             // list of docs from server
-            for documentData in $0 {
-                self.documents.append(documentData)
-                
-                self.LOGGER.info(msg: "added document, label=\(documentData.label), docId=\(documentData.docId), fileRef=\(documentData.fileRef), totalPart=\(documentData.parts)")
-                
-            }
-            
-            self.LOGGER.debug(msg: "server documents.count=\(self.documents.count)")
+            let serverDocs: [DocumentData] = $0
             
             // list of docs in database
-            let dbList = DatabaseService.getInstance().listAllDocuments()
+            let dbList = self.databaseService.listAllDocuments()
             
             // compare
-            let newDocs = self.findNewDocuments(serverList: self.documents, dbList: dbList)
+            let newDocs = self.findNewDocuments(serverList: serverDocs, dbList: dbList)
             
             // add new docs
             for newDoc in newDocs {
                 newDoc.status = DocumentStatus.NEW
-                // TODO
-                _ = DatabaseService.getInstance().insertDocument(document: newDoc)
+                
+                self.LOGGER.info(msg: "New document from server: \(newDoc.label)")
+                
+                do {
+                    let insertedDoc = try self.databaseService.insertDocument(document: newDoc)
+                    self.documents.append(insertedDoc)
+                } catch {
+                    self.LOGGER.error(msg: "Error inserting document in database: \(error.localizedDescription)")
+                }
             }
             
             DispatchQueue.main.async{
@@ -137,10 +139,9 @@ class DocumentsViewController: UIViewController, UITableViewDelegate, UITableVie
         for doc in serverList {
             let key = KeyUtils.buildDocumentKey(doc: doc)
             if (localDic[key] != nil) {
-                LOGGER.debug(msg: "key existed: \(key)")
+                // TODO: handle updates on synchronized document
             }
             else {
-                LOGGER.debug(msg: "new key: \(key)")
                 newDocs.append(doc)
             }
         }

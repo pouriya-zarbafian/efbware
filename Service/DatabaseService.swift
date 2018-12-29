@@ -38,14 +38,9 @@ class DatabaseService: NSObject {
     /**
      * Insert a document in the local database
      */
-    func insertDocument(document: DocumentData) -> DocumentData? {
+    func insertDocument(document: DocumentData) throws -> DocumentData {
         
-        do {
-            return try self.documentDao.create(document: document)
-        }
-        catch {
-            return nil
-        }
+        return try self.documentDao.create(document: document)
     }
     
     /**

@@ -12,7 +12,7 @@ class KeyUtils: NSObject {
 
     static func buildDocumentKey(doc: DocumentData) -> String {
         
-        let key = doc.docId + "_" + doc.fileRef
+        let key = doc.docId
         return key
     }
     static func buildDocumentPartKey(doc: DocumentData, part: DocumentPartData) -> String {
