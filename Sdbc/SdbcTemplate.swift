@@ -17,22 +17,33 @@ class SdbcTemplate: NSObject {
     
     func execute(sql: String, params: [String:Any] = [:]) throws {
     
-        LOGGER.debug(msg: "execute, sql=\(sql), params=\(params)")
+        LOGGER.trace(msg: "execute, sql=\(sql), params=\(params)")
         
         let finalSql = try setParams(sql: sql, params: params)
         
-        LOGGER.debug(msg: "finalSql=\(finalSql)")
+        LOGGER.trace(msg: "finalSql=\(finalSql)")
         
         try self.db.execute(sql: finalSql)
     }
     
-    func query<T>(sql: String, params: [String: Any], rowMapper: (OpaquePointer) -> T) throws -> [T] {
+    func insertAndReturnKey(sql: String, params: [String:Any] = [:]) throws -> Int {
         
-        LOGGER.debug(msg: "query, sql=\(sql), params=\(params)")
+        LOGGER.trace(msg: "execute, sql=\(sql), params=\(params)")
         
         let finalSql = try setParams(sql: sql, params: params)
         
-        LOGGER.debug(msg: "finalSql=\(finalSql)")
+        LOGGER.trace(msg: "finalSql=\(finalSql)")
+        
+        return try self.db.insertRowAndReturnKey(sql: finalSql)
+    }
+    
+    func query<T>(sql: String, params: [String: Any], rowMapper: (OpaquePointer) -> T) throws -> [T] {
+        
+        LOGGER.trace(msg: "query, sql=\(sql), params=\(params)")
+        
+        let finalSql = try setParams(sql: sql, params: params)
+        
+        LOGGER.trace(msg: "finalSql=\(finalSql)")
         
         return try self.db.query(sql: finalSql, rowMapper: rowMapper)
     }
@@ -45,7 +56,7 @@ class SdbcTemplate: NSObject {
             
             let sqlValue = try paramToString(param: value)
             
-            LOGGER.debug(msg: "replacing instances of=:\(key) with=\(sqlValue)")
+            LOGGER.trace(msg: "replacing instances of=:\(key) with=\(sqlValue)")
             finalSql = finalSql.replacingOccurrences(of: ":\(key)", with: sqlValue)
         }
         

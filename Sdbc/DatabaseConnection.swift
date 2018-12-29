@@ -21,6 +21,8 @@ class DatabaseConnection {
     // open database file
     private var db: OpaquePointer?
     
+    let semaphore = DispatchSemaphore(value: 1)
+    
     init() throws {
     
         // DB dir
@@ -122,23 +124,65 @@ class DatabaseConnection {
     
     func execute(sql: String) throws {
         
+        semaphore.wait()
+        
         if sqlite3_exec(self.db, sql, nil, nil, nil) != SQLITE_OK {
+            
             let errmsg = String(cString: sqlite3_errmsg(self.db)!)
             LOGGER.error(msg: "Error during execute: \(errmsg)")
+            
+            semaphore.signal()
+            
             throw DatabaseError.sqlError(message: "Error executing SQL: \(errmsg)")
         }
         else {
-            LOGGER.debug(msg: "SQL executed successfully")
+            LOGGER.trace(msg: "SQL executed successfully")
+            
+            semaphore.signal()
         }
     }
     
-    func query<T>(sql: String, rowMapper: (OpaquePointer) -> T) throws -> [T] {
+    func insertRowAndReturnKey(sql: String) throws -> Int {
+        
+        semaphore.wait()
+        
+        if sqlite3_exec(self.db, sql, nil, nil, nil) != SQLITE_OK {
+            
+            let errmsg = String(cString: sqlite3_errmsg(self.db)!)
+            LOGGER.error(msg: "Error during execute: \(errmsg)")
+            
+            semaphore.signal()
+            
+            throw DatabaseError.sqlError(message: "Error executing SQL: \(errmsg)")
+        }
+        else {
+            LOGGER.trace(msg: "SQL executed successfully")
+            
+            let genId64 = sqlite3_last_insert_rowid(self.db)
+            
+            let genId = Int(genId64)
+            
+            semaphore.signal()
+            
+            LOGGER.trace(msg: "🔑 Generated ID: \(genId)")
+            
+            return genId
+        }
+    }
+    
+    func query<T>(sql: String, rowMapper: (OpaquePointer) throws -> T) throws -> [T] {
+        
+        semaphore.wait()
         
         // query
         var statement: OpaquePointer?
         if sqlite3_prepare_v2(self.db, sql, -1, &statement, nil) != SQLITE_OK {
+            
             let errmsg = String(cString: sqlite3_errmsg(db)!)
             LOGGER.error(msg: "Error preparing select: \(errmsg)")
+            
+            semaphore.signal()
+            
             throw DatabaseError.sqlError(message: "Error preparing select: \(errmsg)")
         }
         
@@ -146,16 +190,27 @@ class DatabaseConnection {
         
         while sqlite3_step(statement) == SQLITE_ROW {
             
-            let entity = rowMapper(statement!)
-            rows.append(entity)
+            do {
+                let entity = try rowMapper(statement!)
+                rows.append(entity)
+            } catch {
+                semaphore.signal()
+                throw error
+            }
         }
         
         // finalize
         if sqlite3_finalize(statement) != SQLITE_OK {
+            
             let errmsg = String(cString: sqlite3_errmsg(db)!)
             LOGGER.error(msg: "Error finalizing prepared statement: \(errmsg)")
+            
+            semaphore.signal()
+            
             throw DatabaseError.sqlError(message: "Error finalizing prepared statement: \(errmsg)")
         }
+        
+        semaphore.signal()
         
         return rows
     }

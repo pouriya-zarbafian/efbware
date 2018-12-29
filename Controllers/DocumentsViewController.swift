@@ -13,6 +13,8 @@ class DocumentsViewController: UIViewController, UITableViewDelegate, UITableVie
 
     private let LOGGER = Logger.getInstance()
     
+    private let databaseService = DatabaseService.getInstance()
+    
     private var targetDocumentUrl: URL!
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -69,6 +71,12 @@ class DocumentsViewController: UIViewController, UITableViewDelegate, UITableVie
         
         LOGGER.info(msg: "💜 DocumentsViewController: timer started")
 
+    }
+    
+    private func getDocumentsFromDb() -> [DocumentData] {
+        
+        // TODO
+        return []
     }
     
     private func getDocumentsFromServer() {

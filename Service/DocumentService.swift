@@ -209,7 +209,7 @@ class DocumentService: NSObject {
         
         let xml = partReq.toXml()
 
-        LOGGER.debug(msg: "XML\n\(xml)")
+        LOGGER.trace(msg: "XML\n\(xml)")
         
         self.httpService.post(url: Constants.URL_READ_PART, xml: xml, onSuccess: successClosure, onError: errorClosure)
     }

@@ -26,13 +26,13 @@ class DokaService: NSObject {
         
         let xml = docReq.toXml()
         
-        LOGGER.debug(msg: "XML\n\(xml)")
+        LOGGER.trace(msg: "XML\n\(xml)")
         
         let successClosure: (HTTPURLResponse, Data) -> Void = {
  
             let xml = String(data: $1, encoding: .utf8)!
             
-            self.LOGGER.info(msg: "documents retrieved, xml=\n\(xml)")
+            self.LOGGER.trace(msg: "documents retrieved, xml=\n\(xml)")
             
             let docs = XmlUtils.parseSearchResult(xml: xml)
             

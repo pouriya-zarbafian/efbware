@@ -29,8 +29,9 @@ class DocumentDao: NSObject {
         params["parts"] = document.parts
         params["status"] = document.status
         
-        // TODO: return generated id
-        try sdbcTemplate.execute(sql: sql, params: params)
+        let generatedId = try sdbcTemplate.insertAndReturnKey(sql: sql, params: params)
+        
+        document.id = generatedId
         
         LOGGER.info(msg: "Document inserted, id=\(document.id), fileName=\(document.fileName), label=\(document.label), docId=\(document.docId), fileRef=\(document.fileRef), parts=\(document.parts), status=\(document.status)")
         

@@ -19,6 +19,7 @@ class Logger {
     private var logLevel: LogLevel = .debug
     
     private enum LogLevel {
+        case trace
         case debug
         case info
         case warn
@@ -31,6 +32,10 @@ class Logger {
     
     private init() {
         print("Logger.init")
+    }
+    
+    func trace(msg: String) {
+        log(level: .trace, msg: msg)
     }
     
     func debug(msg: String) {
@@ -77,6 +82,8 @@ class Logger {
     private func getValue(level: LogLevel) -> Int {
 
         switch level {
+        case .trace:
+            return 0
         case .debug:
             return 1
         case .info:
