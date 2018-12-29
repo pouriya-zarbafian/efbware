@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		A62F24A521D6E3480002651B /* DocumentDisplayViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A62F24A421D6E3480002651B /* DocumentDisplayViewController.swift */; };
 		A631812921D1720C00D06532 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A631812821D1720C00D06532 /* AppDelegate.swift */; };
 		A631812B21D1720C00D06532 /* RootController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A631812A21D1720C00D06532 /* RootController.swift */; };
 		A631812E21D1720C00D06532 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A631812C21D1720C00D06532 /* Main.storyboard */; };
@@ -41,7 +42,6 @@
 		A66AE2A121D4297000A22B7A /* DocumentService.swift in Sources */ = {isa = PBXBuildFile; fileRef = A66AE2A021D4297000A22B7A /* DocumentService.swift */; };
 		A66AE2A421D4353600A22B7A /* DatabaseError.swift in Sources */ = {isa = PBXBuildFile; fileRef = A66AE2A321D4353600A22B7A /* DatabaseError.swift */; };
 		A66AE2A621D435E900A22B7A /* DocumentDao.swift in Sources */ = {isa = PBXBuildFile; fileRef = A66AE2A521D435E900A22B7A /* DocumentDao.swift */; };
-		A66AE2A821D43DAC00A22B7A /* SchemaDao.swift in Sources */ = {isa = PBXBuildFile; fileRef = A66AE2A721D43DAC00A22B7A /* SchemaDao.swift */; };
 		A66AE2AA21D444AB00A22B7A /* DocumentPartData.swift in Sources */ = {isa = PBXBuildFile; fileRef = A66AE2A921D444AB00A22B7A /* DocumentPartData.swift */; };
 		A66AE2AC21D4456A00A22B7A /* DocumentPartStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = A66AE2AB21D4456A00A22B7A /* DocumentPartStatus.swift */; };
 		A66AE2AE21D446E200A22B7A /* DocumentPartDao.swift in Sources */ = {isa = PBXBuildFile; fileRef = A66AE2AD21D446E200A22B7A /* DocumentPartDao.swift */; };
@@ -51,7 +51,6 @@
 		A6C8ECEC21D6936C00EAA036 /* SqlType.swift in Sources */ = {isa = PBXBuildFile; fileRef = A6C8ECEB21D6936C00EAA036 /* SqlType.swift */; };
 		A6C8ECEF21D6BCA400EAA036 /* SelectDocument.swift in Sources */ = {isa = PBXBuildFile; fileRef = A6C8ECEE21D6BCA400EAA036 /* SelectDocument.swift */; };
 		A6C8ECF121D6C9D400EAA036 /* SelectDocumentPart.swift in Sources */ = {isa = PBXBuildFile; fileRef = A6C8ECF021D6C9D400EAA036 /* SelectDocumentPart.swift */; };
-		A6C8ECF321D6CD9300EAA036 /* CreateTables.swift in Sources */ = {isa = PBXBuildFile; fileRef = A6C8ECF221D6CD9300EAA036 /* CreateTables.swift */; };
 		A6F049E221D58CF0000C3C0C /* SdbcTemplate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A6F049E121D58CF0000C3C0C /* SdbcTemplate.swift */; };
 /* End PBXBuildFile section */
 
@@ -66,6 +65,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		A62F24A421D6E3480002651B /* DocumentDisplayViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DocumentDisplayViewController.swift; sourceTree = "<group>"; };
 		A631812521D1720C00D06532 /* efbware.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = efbware.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A631812821D1720C00D06532 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		A631812A21D1720C00D06532 /* RootController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootController.swift; sourceTree = "<group>"; };
@@ -105,7 +105,6 @@
 		A66AE2A021D4297000A22B7A /* DocumentService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DocumentService.swift; sourceTree = "<group>"; };
 		A66AE2A321D4353600A22B7A /* DatabaseError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatabaseError.swift; sourceTree = "<group>"; };
 		A66AE2A521D435E900A22B7A /* DocumentDao.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DocumentDao.swift; sourceTree = "<group>"; };
-		A66AE2A721D43DAC00A22B7A /* SchemaDao.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SchemaDao.swift; sourceTree = "<group>"; };
 		A66AE2A921D444AB00A22B7A /* DocumentPartData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DocumentPartData.swift; sourceTree = "<group>"; };
 		A66AE2AB21D4456A00A22B7A /* DocumentPartStatus.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DocumentPartStatus.swift; sourceTree = "<group>"; };
 		A66AE2AD21D446E200A22B7A /* DocumentPartDao.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DocumentPartDao.swift; sourceTree = "<group>"; };
@@ -115,7 +114,6 @@
 		A6C8ECEB21D6936C00EAA036 /* SqlType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SqlType.swift; sourceTree = "<group>"; };
 		A6C8ECEE21D6BCA400EAA036 /* SelectDocument.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectDocument.swift; sourceTree = "<group>"; };
 		A6C8ECF021D6C9D400EAA036 /* SelectDocumentPart.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectDocumentPart.swift; sourceTree = "<group>"; };
-		A6C8ECF221D6CD9300EAA036 /* CreateTables.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateTables.swift; sourceTree = "<group>"; };
 		A6F049E121D58CF0000C3C0C /* SdbcTemplate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SdbcTemplate.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -203,6 +201,7 @@
 				A631815721D1767A00D06532 /* DocumentsViewController.swift */,
 				A631815921D1769100D06532 /* TechlogViewController.swift */,
 				A631815B21D176A200D06532 /* SettingsViewController.swift */,
+				A62F24A421D6E3480002651B /* DocumentDisplayViewController.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -262,7 +261,6 @@
 			children = (
 				A6C8ECED21D6BC8700EAA036 /* Sql */,
 				A66AE2A521D435E900A22B7A /* DocumentDao.swift */,
-				A66AE2A721D43DAC00A22B7A /* SchemaDao.swift */,
 				A66AE2AD21D446E200A22B7A /* DocumentPartDao.swift */,
 			);
 			path = Dao;
@@ -273,7 +271,6 @@
 			children = (
 				A6C8ECEE21D6BCA400EAA036 /* SelectDocument.swift */,
 				A6C8ECF021D6C9D400EAA036 /* SelectDocumentPart.swift */,
-				A6C8ECF221D6CD9300EAA036 /* CreateTables.swift */,
 			);
 			path = Sql;
 			sourceTree = "<group>";
@@ -393,10 +390,8 @@
 			files = (
 				A631813121D1720C00D06532 /* efbware.xcdatamodeld in Sources */,
 				A631816421D17E7800D06532 /* Parser.swift in Sources */,
-				A6C8ECF321D6CD9300EAA036 /* CreateTables.swift in Sources */,
 				A631817321D1851400D06532 /* LoginRequest.swift in Sources */,
 				A631816E21D180A400D06532 /* LoginData.swift in Sources */,
-				A66AE2A821D43DAC00A22B7A /* SchemaDao.swift in Sources */,
 				A64813BB21D567DF006AEDD4 /* DatabaseConnection.swift in Sources */,
 				A66AE2A121D4297000A22B7A /* DocumentService.swift in Sources */,
 				A66AE2B421D4805100A22B7A /* FileSystemError.swift in Sources */,
@@ -405,6 +400,7 @@
 				A64813B921D56703006AEDD4 /* ConnectionPool.swift in Sources */,
 				A66AE2A621D435E900A22B7A /* DocumentDao.swift in Sources */,
 				A631815821D1767A00D06532 /* DocumentsViewController.swift in Sources */,
+				A62F24A521D6E3480002651B /* DocumentDisplayViewController.swift in Sources */,
 				A66AE29C21D3DBD200A22B7A /* DatabaseService.swift in Sources */,
 				A66AE2B221D467B900A22B7A /* KeyUtils.swift in Sources */,
 				A66AE2B021D461A100A22B7A /* DocumentPartRequest.swift in Sources */,

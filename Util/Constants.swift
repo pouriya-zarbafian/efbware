@@ -37,7 +37,7 @@ class Constants: NSObject {
     static let HTTP_CONTENT_TYPE_XML = "application/xml"
     
     static let SEGUE_APP_TO_LOGIN = "appToLogin"
-    static let SEGUE_SHOW_DOCUMENT_VIEWER = "showDocumentViewer"
+    static let SEGUE_SHOW_DOCUMENT_VIEWER = "documentViewer"
     
     static let CLOSURE_SORT_DOCUMENT_PARTS: (DocumentPartData, DocumentPartData) -> Bool = {
         

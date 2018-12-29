@@ -20,7 +20,6 @@ class DatabaseService: NSObject {
     
     private var fileSystemService = FileSystemService.getInstance()
     
-    private var schemaDao: SchemaDao
     private var documentDao: DocumentDao
     private var documentPartDao: DocumentPartDao
     
@@ -30,7 +29,6 @@ class DatabaseService: NSObject {
     
     override private init() {
 
-        schemaDao = SchemaDao()
         documentDao = DocumentDao()
         documentPartDao = DocumentPartDao()
         

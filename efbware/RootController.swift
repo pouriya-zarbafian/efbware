@@ -16,6 +16,8 @@ class RootController: UITabBarController {
     
     static var loggedIn = false
     
+    var targetDocumentUrl: URL?
+    
     let runAdvanceTasks: (Timer) -> Void = {
         
         if(loggedIn) {
@@ -75,6 +77,26 @@ class RootController: UITabBarController {
         else {
             LOGGER.info(msg: "user is not logged in, show login dialog")
             self.performSegue(withIdentifier: Constants.SEGUE_APP_TO_LOGIN, sender: nil)
+        }
+    }
+    
+    func showDocumentViewer(documentUrl: URL) {
+        
+        targetDocumentUrl = documentUrl
+        self.performSegue(withIdentifier: Constants.SEGUE_SHOW_DOCUMENT_VIEWER, sender: self)
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        
+        LOGGER.debug(msg: "prepareSegue: \(String(describing: segue.identifier))")
+        
+        if segue.identifier == Constants.SEGUE_SHOW_DOCUMENT_VIEWER {
+            
+            LOGGER.debug(msg: "Setting document URL")
+            
+            let viewController = segue.destination as! DocumentDisplayViewController
+            
+            viewController.documentUrl = targetDocumentUrl
         }
     }
 }

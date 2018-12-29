@@ -173,28 +173,58 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="0aq-BV-Ltp">
-                                <rect key="frame" x="20" y="39" width="794" height="128"/>
+                                <rect key="frame" x="20" y="39" width="794" height="1071"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             </tableView>
-                            <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="djx-um-wMo" customClass="PDFView">
-                                <rect key="frame" x="20" y="220" width="794" height="872"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                            </view>
                         </subviews>
                         <color key="backgroundColor" red="0.93252300129999999" green="0.86687131179999999" blue="0.71508058610000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <viewLayoutGuide key="safeArea" id="qZZ-2N-iA6"/>
                     </view>
                     <tabBarItem key="tabBarItem" title="DOCUMENTS" id="49k-2M-Z6O"/>
                     <connections>
-                        <outlet property="pdfViewerView" destination="djx-um-wMo" id="mEP-yz-kd8"/>
                         <outlet property="tableView" destination="0aq-BV-Ltp" id="3wZ-o9-hh9"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="hvJ-3j-y8e" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="907.91366906474832" y="1182.9145728643216"/>
+            <point key="canvasLocation" x="907.91366906474832" y="1215.5778894472362"/>
+        </scene>
+        <!--Document Display View Controller-->
+        <scene sceneID="6GQ-KF-cmr">
+            <objects>
+                <viewController id="tY8-TR-zXq" customClass="DocumentDisplayViewController" customModule="efbware" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="aCP-aZ-jlx">
+                        <rect key="frame" x="0.0" y="0.0" width="834" height="1194"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="1sf-lk-WSi" customClass="PDFView">
+                                <rect key="frame" x="0.0" y="33" width="834" height="1161"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            </view>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Epm-hA-TD3">
+                                <rect key="frame" x="149" y="0.0" width="67" height="33"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" red="0.71372549019999998" green="0.66274509800000003" blue="0.55294117649999996" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <state key="normal" title="CLOSE">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                </state>
+                                <connections>
+                                    <action selector="closButton:" destination="tY8-TR-zXq" eventType="touchUpInside" id="XtB-5E-FEq"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" red="0.95713039340101524" green="0.92196682085005377" blue="0.85465266343456825" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <viewLayoutGuide key="safeArea" id="Kqo-1e-6UR"/>
+                    </view>
+                    <connections>
+                        <outlet property="pdfViewerOutlet" destination="1sf-lk-WSi" id="sgf-Xv-jHQ"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Y8h-bF-l28" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1716.5467625899282" y="874.8743718592965"/>
         </scene>
         <!--TECHLOG-->
         <scene sceneID="1RB-oj-wTR">
@@ -226,6 +256,7 @@
                         <segue destination="9Gf-Me-HJf" kind="relationship" relationship="viewControllers" id="xFE-s3-Eyg"/>
                         <segue destination="Pxz-bf-rou" kind="relationship" relationship="viewControllers" id="fet-GK-7q0"/>
                         <segue destination="War-OR-5ie" kind="presentation" identifier="appToLogin" modalPresentationStyle="fullScreen" modalTransitionStyle="flipHorizontal" id="lxX-Mv-yjW"/>
+                        <segue destination="tY8-TR-zXq" kind="presentation" identifier="documentViewer" id="Vte-Kq-1Ac"/>
                     </connections>
                 </tabBarController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="VU0-gp-ADo" userLabel="First Responder" sceneMemberID="firstResponder"/>

@@ -35,44 +35,19 @@ class DocumentsViewController: UIViewController, UITableViewDelegate, UITableVie
             
             let targetDoc = documents[indexPath.row]
             let docUrl = FileSystemService.getInstance().getDocumentsUrl().appendingPathComponent(targetDoc.fileName)
-            LOGGER.info(msg: "tagerUrl=\(docUrl.path)")
+            LOGGER.debug(msg: "tagerUrl=\(docUrl.path)")
             
-            // Add PDFView to view controller.
-            //let pdfView = PDFView(frame: self.view.bounds)
-            //pdfViewerView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
-            //self.view.addSubview(pdfView)
+            let viewController = self.parent as! RootController
             
-            // Fit content in PDFView.
-            //pdfViewerView.autoScales = true
-            
-            // Load file
-            pdfViewerView.document = PDFDocument(url: docUrl)
-            
-            //self.performSegue(withIdentifier: Constants.SEGUE_SHOW_DOCUMENT_VIEWER, sender: self)
+            viewController.showDocumentViewer(documentUrl: docUrl)
+
         }
     }
-    
-    /*
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        
-        LOGGER.debug(msg: "prepareSegue: \(Constants.SEGUE_SHOW_DOCUMENT_VIEWER)")
-        
-        if segue.identifier == Constants.SEGUE_SHOW_DOCUMENT_VIEWER {
-            
-            LOGGER.debug(msg: "Setting document URL")
-            
-            let viewController = segue.destination as! DocumentViewController
-            
-            viewController.documentUrl = targetDocumentUrl
-        }
-    }
- */
     
     private var documents = [DocumentData]()
     
     // MARK: UI
     @IBOutlet weak var tableView: UITableView!
-    @IBOutlet weak var pdfViewerView: PDFView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
