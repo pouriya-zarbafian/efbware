@@ -21,11 +21,33 @@ class DocumentsViewController: UIViewController, UITableViewDelegate, UITableVie
         return self.documents.count;
     }
     
+    func numberOfSections(in tableView: UITableView) -> Int {
+        return 1
+    }
+    
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
-        let cell:UITableViewCell = tableView.dequeueReusableCell(withIdentifier: "cell")!
+        //let cell:UITableViewCell = tableView.dequeueReusableCell(withIdentifier: "cell")!
+        let cell: DocumentTableViewCell = tableView.dequeueReusableCell(withIdentifier: "cell") as! DocumentTableViewCell
         
-        cell.textLabel?.text = self.documents[indexPath.row].label + " - " + self.documents[indexPath.row].status
+        //cell.textLabel?.text = self.documents[indexPath.row].label + " - " + self.documents[indexPath.row].status
+        
+        let curDoc = self.documents[indexPath.row]
+        cell.labelCell?.text = curDoc.label + "- CUSTOM - " + curDoc.status
+        
+        // TODO: replace with icons
+        let color: UIColor
+        switch curDoc.status {
+        case DocumentStatus.NEW:
+            color = UIColor.red
+        case DocumentStatus.BUILDING:
+            color = UIColor.yellow
+        case DocumentStatus.COMPLETE:
+            color = UIColor.green
+        default:
+            color = UIColor.black
+        }
+        cell.iconCell?.backgroundColor = color
         
         return cell
     }
@@ -33,6 +55,7 @@ class DocumentsViewController: UIViewController, UITableViewDelegate, UITableVie
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         LOGGER.debug(msg: "You selected cell #\(indexPath.row)")
         if let cell = tableView.cellForRow(at: indexPath) {
+            
             LOGGER.debug(msg: "label=\(String(describing: cell.textLabel))")
             
             let targetDoc = documents[indexPath.row]
@@ -57,7 +80,6 @@ class DocumentsViewController: UIViewController, UITableViewDelegate, UITableVie
         
         tableView.dataSource = self
         tableView.delegate = self
-        tableView.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
         
         refreshDocumentsFromDb()
         

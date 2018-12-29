@@ -48,6 +48,7 @@
 		A66AE2B021D461A100A22B7A /* DocumentPartRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = A66AE2AF21D461A100A22B7A /* DocumentPartRequest.swift */; };
 		A66AE2B221D467B900A22B7A /* KeyUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = A66AE2B121D467B900A22B7A /* KeyUtils.swift */; };
 		A66AE2B421D4805100A22B7A /* FileSystemError.swift in Sources */ = {isa = PBXBuildFile; fileRef = A66AE2B321D4805100A22B7A /* FileSystemError.swift */; };
+		A69285EA21D7F4DE0039B0EC /* DocumentTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A69285E921D7F4DE0039B0EC /* DocumentTableViewCell.swift */; };
 		A6C8ECEC21D6936C00EAA036 /* SqlType.swift in Sources */ = {isa = PBXBuildFile; fileRef = A6C8ECEB21D6936C00EAA036 /* SqlType.swift */; };
 		A6C8ECEF21D6BCA400EAA036 /* SelectDocument.swift in Sources */ = {isa = PBXBuildFile; fileRef = A6C8ECEE21D6BCA400EAA036 /* SelectDocument.swift */; };
 		A6C8ECF121D6C9D400EAA036 /* SelectDocumentPart.swift in Sources */ = {isa = PBXBuildFile; fileRef = A6C8ECF021D6C9D400EAA036 /* SelectDocumentPart.swift */; };
@@ -111,6 +112,7 @@
 		A66AE2AF21D461A100A22B7A /* DocumentPartRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DocumentPartRequest.swift; sourceTree = "<group>"; };
 		A66AE2B121D467B900A22B7A /* KeyUtils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyUtils.swift; sourceTree = "<group>"; };
 		A66AE2B321D4805100A22B7A /* FileSystemError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileSystemError.swift; sourceTree = "<group>"; };
+		A69285E921D7F4DE0039B0EC /* DocumentTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DocumentTableViewCell.swift; sourceTree = "<group>"; };
 		A6C8ECEB21D6936C00EAA036 /* SqlType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SqlType.swift; sourceTree = "<group>"; };
 		A6C8ECEE21D6BCA400EAA036 /* SelectDocument.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectDocument.swift; sourceTree = "<group>"; };
 		A6C8ECF021D6C9D400EAA036 /* SelectDocumentPart.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectDocumentPart.swift; sourceTree = "<group>"; };
@@ -202,6 +204,7 @@
 				A631815921D1769100D06532 /* TechlogViewController.swift */,
 				A631815B21D176A200D06532 /* SettingsViewController.swift */,
 				A62F24A421D6E3480002651B /* DocumentDisplayViewController.swift */,
+				A69285E921D7F4DE0039B0EC /* DocumentTableViewCell.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -402,6 +405,7 @@
 				A631815821D1767A00D06532 /* DocumentsViewController.swift in Sources */,
 				A62F24A521D6E3480002651B /* DocumentDisplayViewController.swift in Sources */,
 				A66AE29C21D3DBD200A22B7A /* DatabaseService.swift in Sources */,
+				A69285EA21D7F4DE0039B0EC /* DocumentTableViewCell.swift in Sources */,
 				A66AE2B221D467B900A22B7A /* KeyUtils.swift in Sources */,
 				A66AE2B021D461A100A22B7A /* DocumentPartRequest.swift in Sources */,
 				A631812B21D1720C00D06532 /* RootController.swift in Sources */,
