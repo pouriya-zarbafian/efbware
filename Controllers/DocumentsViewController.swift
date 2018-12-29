@@ -25,7 +25,7 @@ class DocumentsViewController: UIViewController, UITableViewDelegate, UITableVie
         
         let cell:UITableViewCell = tableView.dequeueReusableCell(withIdentifier: "cell")!
         
-        cell.textLabel?.text = self.documents[indexPath.row].label
+        cell.textLabel?.text = self.documents[indexPath.row].label + " - " + self.documents[indexPath.row].status
         
         return cell
     }
@@ -59,16 +59,14 @@ class DocumentsViewController: UIViewController, UITableViewDelegate, UITableVie
         tableView.delegate = self
         tableView.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
         
-        // load local documents
-        let dbDocs = getDocumentsFromDb()
-        documents.removeAll()
-        for dbDoc in dbDocs {
-            self.documents.append(dbDoc)
-        }
+        refreshDocumentsFromDb()
         
         let checkForDocs: (Timer) -> Void = {
+            
             self.LOGGER.debug(msg: "Timer running getDocumentsFromServer")
             _ = $0
+            
+            self.refreshDocumentsFromDb()
             self.checkDocumentsFromServer()
         }
         
@@ -76,6 +74,17 @@ class DocumentsViewController: UIViewController, UITableViewDelegate, UITableVie
         
         LOGGER.info(msg: "💜 DocumentsViewController: timer started")
 
+    }
+    
+    private func refreshDocumentsFromDb() {
+        
+        let dbDocs = getDocumentsFromDb()
+        
+        documents.removeAll()
+        
+        for dbDoc in dbDocs {
+            self.documents.append(dbDoc)
+        }
     }
     
     private func getDocumentsFromDb() -> [DocumentData] {

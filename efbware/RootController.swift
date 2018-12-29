@@ -18,50 +18,51 @@ class RootController: UITabBarController {
     
     var targetDocumentUrl: URL?
     
-    let runAdvanceTasks: (Timer) -> Void = {
-        
-        if(loggedIn) {
-            
-            let docService = DocumentService()
-            
-            print("searching for new documents, timer=\($0.fireDate), interval=\($0.timeInterval)")
-            
-            var newDocs = DatabaseService.getInstance().listDocumentsByStatus(status: DocumentStatus.NEW)
-            print("found \(newDocs.count) documents with state \(DocumentStatus.NEW)")
-            
-            for doc in newDocs {
-                docService.handleNewDocument(document: doc)
-            }
-            
-            print("searching for building documents")
-            
-            var buildingDocs = DatabaseService.getInstance().listDocumentsByStatus(status: DocumentStatus.BUILDING)
-            print("found \(buildingDocs.count) documents with state \(DocumentStatus.BUILDING)")
-            
-            
-            for doc in buildingDocs {
-                docService.handleBuildingDocument(document: doc)
-            }
-            
-            print("searching for complete documents")
-            
-            var completeDocs = DatabaseService.getInstance().listDocumentsByStatus(status: DocumentStatus.BUILDING)
-            print("found \(completeDocs.count) potential documents with state \(DocumentStatus.BUILDING)")
-            
-            //
-            
-            for doc in completeDocs {
-                docService.checkBuildingDocument(document: doc)
-            }
-        }
-    }
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
         
         // Init DB
         _ = DatabaseService.getInstance()
+        
+        // sync closure
+        let runAdvanceTasks: (Timer) -> Void = {
+            
+            if(RootController.loggedIn) {
+                
+                let docService = DocumentService()
+                
+                print("searching for new documents, timer=\($0.fireDate), interval=\($0.timeInterval)")
+                
+                let newDocs = DatabaseService.getInstance().listDocumentsByStatus(status: DocumentStatus.NEW)
+                print("found \(newDocs.count) documents with state \(DocumentStatus.NEW)")
+                
+                for doc in newDocs {
+                    docService.handleNewDocument(document: doc)
+                }
+                
+                print("searching for building documents")
+                
+                let buildingDocs = DatabaseService.getInstance().listDocumentsByStatus(status: DocumentStatus.BUILDING)
+                print("found \(buildingDocs.count) documents with state \(DocumentStatus.BUILDING)")
+                
+                
+                for doc in buildingDocs {
+                    docService.handleBuildingDocument(document: doc)
+                }
+                
+                print("searching for complete documents")
+                
+                let completeDocs = DatabaseService.getInstance().listDocumentsByStatus(status: DocumentStatus.BUILDING)
+                print("found \(completeDocs.count) potential documents with state \(DocumentStatus.BUILDING)")
+                
+                //
+                
+                for doc in completeDocs {
+                    docService.checkBuildingDocument(document: doc)
+                }
+            }
+        }
         
         //advanceTasksTImer =
         Timer.scheduledTimer(withTimeInterval: Constants.ACTIVITY_ADVANCE_TASKS_PERIOD, repeats: true, block: runAdvanceTasks)
