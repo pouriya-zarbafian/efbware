@@ -48,20 +48,22 @@ class XmlUtils: NSObject {
         do {
             try doc = AEXMLDocument(xml: nsdata!)
             
-            // parse known structure
-            for item in doc["response"]["items"]["item"].all! {
-                
-                let docLabel = item["label"].string
-                let docId = item["id"].string
-                let fileName = item["fileName"].string
-                let fileRef = item["files"]["file"]["fileRef"].string
-                let totalPart = item["files"]["file"]["totalPart"].string
-                
-                let documentData = DocumentData(label: docLabel, fileName: fileName, docId: docId, fileRef: fileRef, parts: Int(totalPart)!)
-                
-                LOGGER.info(msg: "parsed document, label=\(documentData.label), docId=\(documentData.docId), fileRef=\(documentData.fileRef), totalPart=\(documentData.parts)")
-                
-                documents.append(documentData)
+            if doc["response"]["items"]["item"].count > 0 {
+                // parse known structure
+                for item in doc["response"]["items"]["item"].all! {
+                    
+                    let docLabel = item["label"].string
+                    let docId = item["id"].string
+                    let fileName = item["fileName"].string
+                    let fileRef = item["files"]["file"]["fileRef"].string
+                    let totalPart = item["files"]["file"]["totalPart"].string
+                    
+                    let documentData = DocumentData(label: docLabel, fileName: fileName, docId: docId, fileRef: fileRef, parts: Int(totalPart)!)
+                    
+                    LOGGER.info(msg: "parsed document, label=\(documentData.label), docId=\(documentData.docId), fileRef=\(documentData.fileRef), totalPart=\(documentData.parts)")
+                    
+                    documents.append(documentData)
+                }
             }
         }
         catch let error as NSError {
