@@ -111,7 +111,7 @@ class DatabaseConnection {
     func createTable() throws {
         
         // create table documents
-        let sqlDocs = "CREATE TABLE document (id integer primary key autoincrement, label text, file_name text, doc_id text, file_ref text, parts integer, status text, UNIQUE(doc_id))"
+        let sqlDocs = "CREATE TABLE document (id integer primary key autoincrement, label text, file_name text, doc_id text, file_ref text, parts integer, status text, deleted integer DEFAULT 0, UNIQUE(doc_id))"
         
         
         // create table document_part

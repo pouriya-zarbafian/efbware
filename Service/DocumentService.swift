@@ -14,7 +14,7 @@ class DocumentService: NSObject {
     
     private var fileSystemService = FileSystemService.getInstance()
     
-    private var databaseService = DatabaseService.getInstance()
+    private var databaseService = DatabaseFacade.getInstance()
     
     private var httpService = HttpService()
     
@@ -29,7 +29,13 @@ class DocumentService: NSObject {
             do {
                 // create document directory
                 let docFolder = fileSystemService.getDocumentFolder(document: document)
-                try fileSystemService.createDir(dir: docFolder)
+                if fileSystemService.existDir(dir: docFolder.path) {
+                    LOGGER.info(msg: "Document folder existed for: \(docFolder.path)")
+                }
+                else {
+                    try fileSystemService.createDir(dir: docFolder)
+                    LOGGER.info(msg: "Created document folder for: \(docFolder.path)")
+                }
                 
                 // init parts in database
                 for partNumber in 0..<document.parts {

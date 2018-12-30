@@ -14,15 +14,23 @@ class SelectDocument: NSObject {
     static var sql = "SELECT id, label, file_name, doc_id, file_ref, parts, status FROM document"
     
     static func getSql() -> String {
-        return sql
+        return sql + " WHERE deleted = 0"
+    }
+    
+    static func getSqlDeleted() -> String {
+        return sql + " WHERE deleted = 1"
     }
     
     static func getSqlWhereId() -> String {
-        return sql + " WHERE id = :id"
+        return getSql() + " AND id = :id"
     }
     
     static func getSqlWhereStatus() -> String {
-        return sql + " WHERE status = :status"
+        return getSql() + " AND status = :status"
+    }
+    
+    static func getSqlDeletedWhereDocument() -> String {
+        return getSqlDeleted() + " AND doc_id = :document"
     }
     
     static func getParams(id: Int) -> [String: Any] {
@@ -35,6 +43,13 @@ class SelectDocument: NSObject {
     static func getParams(status: String) -> [String: Any] {
         
         let params: [String: Any] = ["status": status]
+        
+        return params
+    }
+    
+    static func getParams(document: String) -> [String: Any] {
+        
+        let params: [String: Any] = ["document": document]
         
         return params
     }

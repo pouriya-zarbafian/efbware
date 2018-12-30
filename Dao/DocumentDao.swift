@@ -19,7 +19,7 @@ class DocumentDao: NSObject {
      */
     func create(document: DocumentData) throws -> DocumentData {
         
-        let sql = "INSERT INTO document (label, file_name, doc_id, file_ref, parts, status) VALUES (:label, :filname, :document, :fileref, :parts, :status)"
+        let sql = "INSERT INTO document (label, file_name, doc_id, file_ref, parts, status, deleted) VALUES (:label, :filname, :document, :fileref, :parts, :status, :deleted)"
         
         var params: [String:Any] = [:]
         params["label"] = document.label
@@ -28,6 +28,7 @@ class DocumentDao: NSObject {
         params["fileref"] = document.fileRef
         params["parts"] = document.parts
         params["status"] = document.status
+        params["deleted"] = 0
         
         let generatedId = try sdbcTemplate.insertAndReturnKey(sql: sql, params: params)
         
@@ -49,7 +50,6 @@ class DocumentDao: NSObject {
         params["id"] = document.id
         params["status"] = document.status
         
-        // TODO: return generated id
         try sdbcTemplate.execute(sql: sql, params: params)
         
         LOGGER.info(msg: "Document updated, id=\(document.id), status=\(document.status)")
@@ -58,11 +58,59 @@ class DocumentDao: NSObject {
     }
     
     /**
-     * List all documents in the local database
+     * Reset a document
+     */
+    func reset(document: DocumentData) throws -> DocumentData {
+        
+        document.status = DocumentStatus.NEW
+        let sql = "UPDATE document SET deleted = 0, status = :status WHERE doc_id = :document"
+        
+        var params: [String:Any] = [:]
+        params["document"] = document.docId
+        params["status"] = document.status
+        
+        try sdbcTemplate.execute(sql: sql, params: params)
+        
+        LOGGER.info(msg: "Document reset, docId=\(document.docId), status=\(document.status)")
+        
+        return document
+    }
+    
+    /**
+     * Delete a document
+     */
+    func delete(document: DocumentData) throws {
+        
+        let sql = "UPDATE document SET deleted = 1 WHERE id = :id"
+        
+        var params: [String:Any] = [:]
+        params["id"] = document.id
+        
+        try sdbcTemplate.execute(sql: sql, params: params)
+        
+        LOGGER.info(msg: "Document deleted, id=\(document.id)")
+    }
+    
+    /**
+     * Find a document in the local database
      */
     func findDocumentById(id: Int) throws -> DocumentData? {
         
         let docs = try sdbcTemplate.query(sql: SelectDocument.getSqlWhereId(), params: SelectDocument.getParams(id: id), rowMapper: SelectDocument.DocumentRowMapper)
+        
+        if docs.count > 0 {
+            return docs[0]
+        }
+        
+        return nil
+    }
+    
+    /**
+     * Find a document in the local database
+     */
+    func findDeletedDocumentByDocument(docId: String) throws -> DocumentData? {
+        
+        let docs = try sdbcTemplate.query(sql: SelectDocument.getSqlDeletedWhereDocument(), params: SelectDocument.getParams(document: docId), rowMapper: SelectDocument.DocumentRowMapper)
         
         if docs.count > 0 {
             return docs[0]
@@ -103,4 +151,14 @@ class DocumentDao: NSObject {
         return docs
     }
     
+    func listDeletedDocuments() throws -> Array<DocumentData> {
+        
+        // sql
+        let sql = SelectDocument.getSqlDeleted()
+        let params: [String: Any] = [:]
+        
+        let docs: [DocumentData] = try sdbcTemplate.query(sql: sql, params: params, rowMapper: SelectDocument.DocumentRowMapper)
+        
+        return docs
+    }
 }

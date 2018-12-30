@@ -13,7 +13,7 @@ class DocumentsViewController: UIViewController, UITableViewDelegate, UITableVie
 
     private let LOGGER = Logger.getInstance()
     
-    private let databaseService = DatabaseService.getInstance()
+    private let databaseService = DatabaseFacade.getInstance()
     
     private let fileSystemService = FileSystemService.getInstance()
     
@@ -86,7 +86,6 @@ class DocumentsViewController: UIViewController, UITableViewDelegate, UITableVie
         
         let checkForDocs: (Timer) -> Void = {
             
-            self.LOGGER.debug(msg: "Timer running getDocumentsFromServer")
             _ = $0
             
             self.refreshDocumentsFromDb()
@@ -121,7 +120,7 @@ class DocumentsViewController: UIViewController, UITableViewDelegate, UITableVie
         
         let onResult: (Array<DocumentData>) -> Void = {
             
-            self.LOGGER.info(msg: "DocumentsViewController.onResults, size=\($0.count)")
+            self.LOGGER.trace(msg: "DocumentsViewController.onResults, size=\($0.count)")
             
             // list of docs from server
             let serverDocs: [DocumentData] = $0
@@ -130,7 +129,7 @@ class DocumentsViewController: UIViewController, UITableViewDelegate, UITableVie
             let dbList = self.databaseService.listAllDocuments()
             
             // compare
-            let newDocs = self.findNewDocuments(serverList: serverDocs, dbList: dbList)
+            let newDocs = self.findNewDocuments(sourceList: serverDocs, targetList: dbList)
             
             // add new docs
             for newDoc in newDocs {
@@ -139,10 +138,50 @@ class DocumentsViewController: UIViewController, UITableViewDelegate, UITableVie
                 self.LOGGER.info(msg: "New document from server: \(newDoc.label)")
                 
                 do {
-                    let insertedDoc = try self.databaseService.insertDocument(document: newDoc)
-                    self.documents.append(insertedDoc)
+                    
+                    if let deletedDoc = self.databaseService.findDeletedDocumentByDocument(docId: newDoc.docId) {
+                        if let resetDoc = self.databaseService.resetDocument(document: deletedDoc) {
+                            self.documents.append(resetDoc)
+                        }
+                        else {
+                            self.LOGGER.error(msg: "Error reseting document in database: docId=\(deletedDoc.docId), label=\(deletedDoc.label)")
+                        }
+                    } else {
+                        let insertedDoc = try self.databaseService.insertDocument(document: newDoc)
+                        self.documents.append(insertedDoc)
+                    }
+                    
                 } catch {
                     self.LOGGER.error(msg: "Error inserting document in database: \(error.localizedDescription)")
+                }
+            }
+            
+            // check for deleted docs, just reversing the arguments
+            let delDocs = self.findNewDocuments(sourceList: dbList, targetList: serverDocs)
+            
+            // add new docs
+            for delDoc in delDocs {
+                
+                self.LOGGER.info(msg: "Deleting document: \(delDoc.label)")
+                
+                do {
+                    // TODO: do these inside a transaction
+                    self.databaseService.deleteDocumentPartByDocument(document: delDoc)
+                    self.databaseService.deleteDocument(document: delDoc)
+                    
+                    // remove from local list
+                    let haveSameId: (DocumentData) throws -> Bool = {
+                        return $0.docId == delDoc.docId
+                    }
+                    
+                    if let indexToDelete = try self.documents.firstIndex(where: haveSameId) {
+                        self.documents.remove(at: indexToDelete)
+                    } else {
+                        self.LOGGER.error(msg: "Document not found for removal: \(delDoc.docId)")
+                    }
+                }
+                catch {
+                    self.LOGGER.error(msg: "Error deleting document, id=\(delDoc.docId), label=\(delDoc.label)")
                 }
             }
             
@@ -157,18 +196,18 @@ class DocumentsViewController: UIViewController, UITableViewDelegate, UITableVie
     /**
      * Compare and check which douments are new.
      */
-    private func findNewDocuments(serverList: Array<DocumentData>, dbList: Array<DocumentData>) -> Array<DocumentData> {
+    private func findNewDocuments(sourceList: Array<DocumentData>, targetList: Array<DocumentData>) -> Array<DocumentData> {
         
         var newDocs: Array<DocumentData> = []
         
         var localDic: [String:DocumentData] = [:]
         
-        for doc in dbList {
+        for doc in targetList {
             let key = KeyUtils.buildDocumentKey(doc: doc)
             localDic[key] = doc
         }
         
-        for doc in serverList {
+        for doc in sourceList {
             let key = KeyUtils.buildDocumentKey(doc: doc)
             if (localDic[key] != nil) {
                 // TODO: handle updates on synchronized document
@@ -181,4 +220,31 @@ class DocumentsViewController: UIViewController, UITableViewDelegate, UITableVie
         return newDocs
     }
     
+    /**
+     * Compare and check which douments are deleted.
+     *//*
+    private func findDeletedDocuments(serverList: Array<DocumentData>, dbList: Array<DocumentData>) -> Array<DocumentData> {
+        
+        var delDocs: Array<DocumentData> = []
+        
+        var serverDic: [String:DocumentData] = [:]
+        
+        for doc in serverList {
+            let key = KeyUtils.buildDocumentKey(doc: doc)
+            serverDic[key] = doc
+        }
+        
+        for doc in dbList {
+            let key = KeyUtils.buildDocumentKey(doc: doc)
+            if (serverDic[key] != nil) {
+                // TODO: handle updates on synchronized document
+            }
+            else {
+                delDocs.append(doc)
+            }
+        }
+        
+        return delDocs
+    }
+    */
 }

@@ -60,7 +60,7 @@ class XmlUtils: NSObject {
                     
                     let documentData = DocumentData(label: docLabel, fileName: fileName, docId: docId, fileRef: fileRef, parts: Int(totalPart)!)
                     
-                    LOGGER.info(msg: "parsed document, label=\(documentData.label), docId=\(documentData.docId), fileRef=\(documentData.fileRef), totalPart=\(documentData.parts)")
+                    LOGGER.trace(msg: "parsed document, label=\(documentData.label), docId=\(documentData.docId), fileRef=\(documentData.fileRef), totalPart=\(documentData.parts)")
                     
                     documents.append(documentData)
                 }

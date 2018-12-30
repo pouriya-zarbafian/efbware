@@ -21,7 +21,7 @@ class HttpService: NSObject {
         
         request.httpMethod = "POST"
         
-        self.LOGGER.debug(msg: "host=\(String(describing: request.url?.host))")
+        self.LOGGER.trace(msg: "host=\(String(describing: request.url?.host))")
         
         request.httpBody = xml.data(using: .utf8)
         let task = URLSession.shared.dataTask(with: request) { data, response, error in

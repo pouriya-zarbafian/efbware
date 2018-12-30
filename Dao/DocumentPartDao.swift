@@ -37,7 +37,7 @@ class DocumentPartDao: NSObject {
     }
     
     /**
-     * Update a document
+     * Update a document part
      */
     func update(part: DocumentPartData) throws -> DocumentPartData {
         
@@ -51,6 +51,19 @@ class DocumentPartDao: NSObject {
         try sdbcTemplate.execute(sql: sql, params: params)
         
         return part
+    }
+    
+    /**
+     * Delete a document part
+     */
+    func deleteByDocument(document: DocumentData) throws {
+        
+        let sql = "DELETE FROM document_part WHERE document = :document"
+        
+        var params: [String:Any] = [:]
+        params["document"] = document.id
+        
+        try sdbcTemplate.execute(sql: sql, params: params)
     }
     
     /**

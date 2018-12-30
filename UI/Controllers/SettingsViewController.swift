@@ -34,20 +34,10 @@ class SettingsViewController: UIViewController {
         
         print("PRESSED LIST")
         
-        var userURL = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0]
-        userURL.appendPathComponent(Constants.DIR_APPLICATION)
-        userURL.appendPathComponent(Constants.DIR_DATABASE)
+        let deletedDocs = DatabaseFacade.getInstance().listDeletedDocuments()
         
-        do {
-            let fileURLs = try FileManager.default.contentsOfDirectory(at: userURL, includingPropertiesForKeys: nil)
-            
-            for file in fileURLs {
-                
-                print("Found file: \(file.path)")
-            }
-            
-        } catch {
-            print("Error while enumerating files \(userURL.path): \(error.localizedDescription)")
+        for doc in deletedDocs {
+            print("found deleted doc, id=\(doc.docId), lavel=\(doc.label)")
         }
     }
     
@@ -97,12 +87,12 @@ class SettingsViewController: UIViewController {
         LOGGER.debug(msg: "databaseDirectory=\(docsUrl.path)")
         
         // query
-        let documents = DatabaseService.getInstance().listAllDocuments()
+        let documents = DatabaseFacade.getInstance().listAllDocuments()
         for doc in documents {
             LOGGER.debug(msg: "found document, id=\(doc.id), label=\(doc.label), fileName=\(doc.fileName) docId=\(doc.docId), fileRef=\(doc.fileRef), parts=\(doc.parts), status=\(doc.status)")
             LOGGER.debug(msg: "_")
             
-            let parts = DatabaseService.getInstance().listDocumentParts(documentId: doc.id, status: DocumentPartStatus.NEW)
+            let parts = DatabaseFacade.getInstance().listDocumentParts(documentId: doc.id, status: DocumentPartStatus.NEW)
             for part in parts {
                 LOGGER.debug(msg: "  found part, id=\(part.id), documentId=\(part.documentId), partNumber=\(part.partNumber), status=\(part.status)")
             }
@@ -206,7 +196,7 @@ class SettingsViewController: UIViewController {
         
         print("PRESSED M")
         
-        let bd = DatabaseService.getInstance().listDocumentsByStatus(status: DocumentStatus.BUILDING)
+        let bd = DatabaseFacade.getInstance().listDocumentsByStatus(status: DocumentStatus.BUILDING)
         
         if bd.count > 0 {
             
@@ -219,7 +209,7 @@ class SettingsViewController: UIViewController {
                 return $0.partNumber < $1.partNumber
             }
             
-            let docParts = DatabaseService.getInstance().listDocumentParts(documentId: d.id, status: DocumentPartStatus.DONE).sorted(by: docSorter)
+            let docParts = DatabaseFacade.getInstance().listDocumentParts(documentId: d.id, status: DocumentPartStatus.DONE).sorted(by: docSorter)
             
             for td in docParts {
                 print("partNumber: \(td.partNumber)")

@@ -23,38 +23,39 @@ class RootController: UITabBarController {
         // Do any additional setup after loading the view, typically from a nib.
         
         // Init DB
-        _ = DatabaseService.getInstance()
+        _ = DatabaseFacade.getInstance()
         
         // sync closure
         let runAdvanceTasks: (Timer) -> Void = {
             
+            _ = $0
             if(RootController.loggedIn) {
                 
                 let docService = DocumentService()
                 
-                print("searching for new documents, timer=\($0.fireDate), interval=\($0.timeInterval)")
+                //print("searching for new documents, timer=\($0.fireDate), interval=\($0.timeInterval)")
                 
-                let newDocs = DatabaseService.getInstance().listDocumentsByStatus(status: DocumentStatus.NEW)
-                print("found \(newDocs.count) documents with state \(DocumentStatus.NEW)")
+                let newDocs = DatabaseFacade.getInstance().listDocumentsByStatus(status: DocumentStatus.NEW)
+                //print("found \(newDocs.count) documents with state \(DocumentStatus.NEW)")
                 
                 for doc in newDocs {
                     docService.handleNewDocument(document: doc)
                 }
                 
-                print("searching for building documents")
+                //print("searching for building documents")
                 
-                let buildingDocs = DatabaseService.getInstance().listDocumentsByStatus(status: DocumentStatus.BUILDING)
-                print("found \(buildingDocs.count) documents with state \(DocumentStatus.BUILDING)")
+                let buildingDocs = DatabaseFacade.getInstance().listDocumentsByStatus(status: DocumentStatus.BUILDING)
+                //print("found \(buildingDocs.count) documents with state \(DocumentStatus.BUILDING)")
                 
                 
                 for doc in buildingDocs {
                     docService.handleBuildingDocument(document: doc)
                 }
                 
-                print("searching for complete documents")
+                //print("searching for complete documents")
                 
-                let completeDocs = DatabaseService.getInstance().listDocumentsByStatus(status: DocumentStatus.BUILDING)
-                print("found \(completeDocs.count) potential documents with state \(DocumentStatus.BUILDING)")
+                let completeDocs = DatabaseFacade.getInstance().listDocumentsByStatus(status: DocumentStatus.BUILDING)
+                //print("found \(completeDocs.count) potential documents with state \(DocumentStatus.BUILDING)")
                 
                 //
                 
