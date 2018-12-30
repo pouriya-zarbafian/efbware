@@ -12,5 +12,4 @@ enum FileSystemError: Error {
 
     case fileCreationError(message: String)
     case directoryCreationError(message: String)
-    case cannotAcquireHandle(message: String)
 }

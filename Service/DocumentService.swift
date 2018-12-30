@@ -14,28 +14,39 @@ class DocumentService: NSObject {
     
     private var fileSystemService = FileSystemService.getInstance()
     
+    private var databaseService = DatabaseService.getInstance()
+    
     private var httpService = HttpService()
     
     func handleNewDocument(document: DocumentData) {
         
         LOGGER.debug(msg: "handleNewDocument, id=\(document.id)")
         
-        let doc = DatabaseService.getInstance().findDocumentById(id: document.id)
+        if let doc = databaseService.findDocumentById(id: document.id) {
         
-        if doc == nil {
-            LOGGER.debug(msg: "document not found, id=\(document.id)")
+            LOGGER.debug(msg: "document found, id=\(document.id)")
+        
+            do {
+                // create document directory
+                let docFolder = fileSystemService.getDocumentFolder(document: document)
+                try fileSystemService.createDir(dir: docFolder)
+                
+                // init parts in database
+                for partNumber in 0..<document.parts {
+                    let part = DocumentPartData(partNumber: partNumber, documentId: document.id)
+                    _ = databaseService.insertDocumentPart(part: part)
+                }
+                
+                doc.status = DocumentStatus.BUILDING
+                
+                _ = databaseService.updateDocument(document: doc)
+            } catch {
+                LOGGER.error(msg: "Error while processing new document: \(doc.docId)")
+            }
+        
         }
         else {
-            LOGGER.debug(msg: "document found, id=\(document.id)")
-            
-            for partNumber in 0..<document.parts {
-                let part = DocumentPartData(partNumber: partNumber, documentId: document.id)
-                _ = DatabaseService.getInstance().insertDocumentPart(part: part)
-            }
-            
-            doc!.status = DocumentStatus.BUILDING
-            
-            _ = DatabaseService.getInstance().updateDocument(document: doc!)
+            LOGGER.debug(msg: "document not found, id=\(document.id)")
         }
     }
     
@@ -43,7 +54,7 @@ class DocumentService: NSObject {
         
         LOGGER.debug(msg: "handleBuildingDocument, id=\(document.id)")
         
-        let doc = DatabaseService.getInstance().findDocumentById(id: document.id)
+        let doc = databaseService.findDocumentById(id: document.id)
         
         if doc == nil {
             LOGGER.debug(msg: "document not found, id=\(document.id)")
@@ -51,14 +62,13 @@ class DocumentService: NSObject {
         else {
             LOGGER.debug(msg: "document found, id=\(document.id)")
             
-            let docParts = DatabaseService.getInstance().listDocumentParts(documentId: doc!.id, status: DocumentPartStatus.NEW)
+            let docParts = databaseService.listDocumentParts(documentId: doc!.id, status: DocumentPartStatus.NEW)
             
             LOGGER.debug(msg: "document \(doc!.id), \(docParts.count) parts found")
             
             for part in docParts {
                 
                 downloadPart(document: doc!, part: part)
-                //_ = DatabaseService.getInstance().insertDocumentPart(part: part)
             }
         }
     }
@@ -67,7 +77,7 @@ class DocumentService: NSObject {
         
         LOGGER.debug(msg: "checkBuildingDocument, id=\(document.id)")
         
-        let doc = DatabaseService.getInstance().findDocumentById(id: document.id)
+        let doc = databaseService.findDocumentById(id: document.id)
         
         if doc == nil {
             LOGGER.debug(msg: "document not found, id=\(document.id)")
@@ -75,7 +85,7 @@ class DocumentService: NSObject {
         else {
             LOGGER.debug(msg: "document found, id=\(document.id)")
             
-            let docParts = DatabaseService.getInstance().listDocumentParts(documentId: doc!.id, status: DocumentPartStatus.DONE).sorted(by: Constants.CLOSURE_SORT_DOCUMENT_PARTS)
+            let docParts = databaseService.listDocumentParts(documentId: doc!.id, status: DocumentPartStatus.DONE).sorted(by: Constants.CLOSURE_SORT_DOCUMENT_PARTS)
             
             LOGGER.debug(msg: "document \(doc!.id), parts \(docParts.count) / \(document.parts)")
             
@@ -83,19 +93,17 @@ class DocumentService: NSObject {
                 
                 LOGGER.info(msg: "🌀 Finalize document \(document.id)")
                 
-                
-                let docKey = KeyUtils.buildDocumentKey(doc: document)
-                
                 var partsUrl: Array<URL> = []
                 
                 for part in docParts {
                     
-                    let partKey = KeyUtils.buildDocumentPartKey(doc: document, part: part)
-                    let partUrl = fileSystemService.getDocumentsUrl().appendingPathComponent(docKey).appendingPathComponent(partKey)
+                    let partFilename = fileSystemService.getPartFilename(part: part)
+                    let partUrl = fileSystemService.getDocumentPartsFolder(document: document).appendingPathComponent(partFilename)
+                    
                     partsUrl.append(partUrl)
                 }
                 
-                let documentUrl = fileSystemService.getDocumentsUrl().appendingPathComponent(document.fileName)
+                let documentUrl = fileSystemService.getDocumentUrl(document: document)
                 
                 LOGGER.info(msg: "Document output path: \(documentUrl.path)")
                 
@@ -107,7 +115,7 @@ class DocumentService: NSObject {
                         LOGGER.info(msg: "Document deleted")
                     }
                     else {
-                        LOGGER.info(msg: "Document does not exist")
+                        LOGGER.debug(msg: "Document does not exist")
                     }
                     
                     do {
@@ -126,16 +134,15 @@ class DocumentService: NSObject {
                         LOGGER.debug(msg: "💚 All data written to: \(documentUrl.path)")
 
                     } catch {
-                        LOGGER.error(msg: "⛔ Could not acquire file handle: \(error.localizedDescription)")
-                        throw FileSystemError.cannotAcquireHandle(message: "Could not acquire file handle")
+                        LOGGER.error(msg: "⛔ Error while writing the parts of the document: \(error.localizedDescription)")
+                        throw FileSystemError.fileCreationError(message: "Error while writing the parts of the document")
                     }
-                    
                     
                     LOGGER.info(msg: "📄 Document is complete: \(documentUrl.path)")
                     
                     document.status = DocumentStatus.COMPLETE
                     
-                    _ = DatabaseService.getInstance().updateDocument(document: document)
+                    _ = databaseService.updateDocument(document: document)
                     
                     LOGGER.info(msg: "📄📄 Database was updated")
                     
@@ -145,7 +152,7 @@ class DocumentService: NSObject {
                     return
                 }
                 
-                let partFolderUrl = fileSystemService.getDocumentsUrl().appendingPathComponent(docKey)
+                let partFolderUrl = fileSystemService.getDocumentPartsFolder(document: document)
                 
                 do {
                     LOGGER.info(msg: "💙 Deleting parts folder")
@@ -175,10 +182,8 @@ class DocumentService: NSObject {
             let data = $1
             
             do {
-                let docKey = KeyUtils.buildDocumentKey(doc: document)
-                let partKey = KeyUtils.buildDocumentPartKey(doc: document, part: part)
                 
-                let partFolderUrl = FileSystemService.getInstance().getDocumentsUrl().appendingPathComponent(docKey)
+                let partFolderUrl = self.fileSystemService.getDocumentPartsFolder(document: document)
                 
                 if self.fileSystemService.existDir(dir: partFolderUrl.path) {
                     self.LOGGER.info(msg: "Part folder found: \(partFolderUrl.path)")
@@ -188,7 +193,8 @@ class DocumentService: NSObject {
                     self.LOGGER.info(msg: "Part folder created: \(partFolderUrl.path)")
                 }
                 
-                let partUrl = FileSystemService.getInstance().getDocumentsUrl().appendingPathComponent(docKey).appendingPathComponent(partKey)
+                let partFilename = self.fileSystemService.getPartFilename(part: part)
+                let partUrl = self.fileSystemService.getDocumentPartsFolder(document: document).appendingPathComponent(partFilename)
                 
                 try data.write(to: partUrl, options: [])
                 
@@ -196,7 +202,7 @@ class DocumentService: NSObject {
                 
                 part.status = DocumentPartStatus.DONE
                 
-                _ = DatabaseService.getInstance().updateDocumentPart(part: part)
+                _ = self.databaseService.updateDocumentPart(part: part)
                 
                 self.LOGGER.info(msg: "🎈🎈 Part status updated")
             }

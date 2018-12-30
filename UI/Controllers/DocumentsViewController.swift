@@ -15,6 +15,8 @@ class DocumentsViewController: UIViewController, UITableViewDelegate, UITableVie
     
     private let databaseService = DatabaseService.getInstance()
     
+    private let fileSystemService = FileSystemService.getInstance()
+    
     private var targetDocumentUrl: URL!
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -27,13 +29,10 @@ class DocumentsViewController: UIViewController, UITableViewDelegate, UITableVie
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
-        //let cell:UITableViewCell = tableView.dequeueReusableCell(withIdentifier: "cell")!
         let cell: DocumentTableViewCell = tableView.dequeueReusableCell(withIdentifier: "cell") as! DocumentTableViewCell
         
-        //cell.textLabel?.text = self.documents[indexPath.row].label + " - " + self.documents[indexPath.row].status
-        
         let curDoc = self.documents[indexPath.row]
-        cell.labelCell?.text = curDoc.label + "- CUSTOM - " + curDoc.status
+        cell.labelCell?.text = curDoc.label
         
         
         var loadingImage: UIImage!
@@ -61,7 +60,7 @@ class DocumentsViewController: UIViewController, UITableViewDelegate, UITableVie
             LOGGER.debug(msg: "label=\(String(describing: cell.textLabel))")
             
             let targetDoc = documents[indexPath.row]
-            let docUrl = FileSystemService.getInstance().getDocumentsUrl().appendingPathComponent(targetDoc.fileName)
+            let docUrl = fileSystemService.getDocumentUrl(document: targetDoc)
             LOGGER.debug(msg: "tagerUrl=\(docUrl.path)")
             
             let viewController = self.parent as! RootController

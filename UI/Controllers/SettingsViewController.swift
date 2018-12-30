@@ -146,26 +146,30 @@ class SettingsViewController: UIViewController {
             
             for file in fileURLs {
                 
-                let attributes = try FileManager.default.attributesOfItem(atPath: userURL.path)
+                let attributes = try FileManager.default.attributesOfItem(atPath: file.path)
                 let size = attributes[FileAttributeKey.size] as! Int
                 
                 print("Found file: \(file.path)")
                 print("file size: \(String(size))")
-                /*
-                do {
-                    let partsURLs = try FileManager.default.contentsOfDirectory(at: file, includingPropertiesForKeys: nil)
-                    
-                    for part in partsURLs {
+                
+                var isDir : ObjCBool = false
+                FileManager.default.fileExists(atPath: file.path, isDirectory: &isDir)
+                
+                if isDir.boolValue {
+                    do {
+                        let partsURLs = try FileManager.default.contentsOfDirectory(at: file, includingPropertiesForKeys: nil)
                         
-                        let attributes2 = try FileManager.default.attributesOfItem(atPath: part.path)
-                        let size = attributes2[FileAttributeKey.size] as! Int
-                        
-                        print("   Found file: \(part.path)")
-                        print("   file size: \(String(size))")
-                        
+                        for part in partsURLs {
+                            
+                            let attributes2 = try FileManager.default.attributesOfItem(atPath: part.path)
+                            let size = attributes2[FileAttributeKey.size] as! Int
+                            
+                            print("   Found file: \(part.path)")
+                            print("   file size: \(String(size))")
+                            
+                        }
                     }
                 }
-                */
             }
             
         } catch {
@@ -287,7 +291,6 @@ class SettingsViewController: UIViewController {
                 } catch {
                     LOGGER.error(msg: "⛔ Could not write to file: \(error.localizedDescription)")
                     //LOGGER.error(msg: "⛔ Could not acquire file handle: \(error.localizedDescription)")
-                    throw FileSystemError.cannotAcquireHandle(message: "Could not acquire file handle")
                 }
             }
             catch {

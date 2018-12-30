@@ -154,4 +154,23 @@ class FileSystemService {
             return ""
         }
     }
+    
+    func getDocumentFolder(document: DocumentData) -> URL {
+        
+        return getDocumentsUrl().appendingPathComponent(document.docId)
+    }
+    
+    func getDocumentPartsFolder(document: DocumentData) -> URL {
+        
+        return getDocumentFolder(document: document).appendingPathComponent(document.docId)
+    }
+    
+    func getDocumentUrl(document: DocumentData) -> URL {
+        
+        return getDocumentFolder(document: document).appendingPathComponent(document.fileName)
+    }
+    func getPartFilename(part: DocumentPartData) -> String {
+        
+        return String(part.partNumber)
+    }
 }
