@@ -180,14 +180,14 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="0aq-BV-Ltp">
-                                <rect key="frame" x="20" y="44" width="794" height="1065"/>
+                                <rect key="frame" x="0.0" y="24" width="834" height="1105"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="cell" rowHeight="60" id="J5z-3A-TJR" customClass="DocumentTableViewCell" customModule="efbware" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="28" width="794" height="60"/>
+                                        <rect key="frame" x="0.0" y="28" width="834" height="60"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="J5z-3A-TJR" id="DGY-kZ-q8U">
-                                            <rect key="frame" x="0.0" y="0.0" width="794" height="59.5"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="834" height="59.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="ZK1-DD-HD3">
@@ -222,12 +222,12 @@
                                 </prototypes>
                             </tableView>
                         </subviews>
-                        <color key="backgroundColor" red="0.93252300129999999" green="0.86687131179999999" blue="0.71508058610000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <color key="backgroundColor" red="0.71372549019999998" green="0.66274509800000003" blue="0.55294117649999996" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
-                            <constraint firstItem="0aq-BV-Ltp" firstAttribute="leading" secondItem="qZZ-2N-iA6" secondAttribute="leading" constant="20" id="1qP-WG-gZL"/>
-                            <constraint firstItem="qZZ-2N-iA6" firstAttribute="trailing" secondItem="0aq-BV-Ltp" secondAttribute="trailing" constant="20" id="LCd-IW-0rQ"/>
-                            <constraint firstItem="qZZ-2N-iA6" firstAttribute="bottom" secondItem="0aq-BV-Ltp" secondAttribute="bottom" constant="20" id="UlX-Zy-dMw"/>
-                            <constraint firstItem="0aq-BV-Ltp" firstAttribute="top" secondItem="qZZ-2N-iA6" secondAttribute="top" constant="20" id="xvM-pE-ENc"/>
+                            <constraint firstItem="0aq-BV-Ltp" firstAttribute="leading" secondItem="qZZ-2N-iA6" secondAttribute="leading" id="1qP-WG-gZL"/>
+                            <constraint firstItem="qZZ-2N-iA6" firstAttribute="trailing" secondItem="0aq-BV-Ltp" secondAttribute="trailing" id="LCd-IW-0rQ"/>
+                            <constraint firstItem="qZZ-2N-iA6" firstAttribute="bottom" secondItem="0aq-BV-Ltp" secondAttribute="bottom" id="UlX-Zy-dMw"/>
+                            <constraint firstItem="0aq-BV-Ltp" firstAttribute="top" secondItem="qZZ-2N-iA6" secondAttribute="top" id="xvM-pE-ENc"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="qZZ-2N-iA6"/>
                     </view>
@@ -248,14 +248,12 @@
                         <rect key="frame" x="0.0" y="0.0" width="834" height="1194"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="1sf-lk-WSi" customClass="PDFView">
-                                <rect key="frame" x="0.0" y="33" width="834" height="1161"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="1sf-lk-WSi" customClass="PDFView">
+                                <rect key="frame" x="0.0" y="54" width="834" height="1140"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             </view>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Epm-hA-TD3">
-                                <rect key="frame" x="149" y="0.0" width="67" height="33"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Epm-hA-TD3">
+                                <rect key="frame" x="766" y="24" width="48" height="30"/>
                                 <color key="backgroundColor" red="0.71372549019999998" green="0.66274509800000003" blue="0.55294117649999996" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <state key="normal" title="CLOSE">
                                     <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -265,7 +263,15 @@
                                 </connections>
                             </button>
                         </subviews>
-                        <color key="backgroundColor" red="0.95713039340101524" green="0.92196682085005377" blue="0.85465266343456825" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <color key="backgroundColor" red="0.71372549019999998" green="0.66274509800000003" blue="0.55294117649999996" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <constraints>
+                            <constraint firstItem="1sf-lk-WSi" firstAttribute="leading" secondItem="Kqo-1e-6UR" secondAttribute="leading" id="0Rw-GG-k3x"/>
+                            <constraint firstItem="1sf-lk-WSi" firstAttribute="trailing" secondItem="Kqo-1e-6UR" secondAttribute="trailing" id="8Oz-RP-TeU"/>
+                            <constraint firstItem="Kqo-1e-6UR" firstAttribute="trailing" secondItem="Epm-hA-TD3" secondAttribute="trailing" constant="20" id="LAY-IS-f8h"/>
+                            <constraint firstItem="Epm-hA-TD3" firstAttribute="top" secondItem="Kqo-1e-6UR" secondAttribute="top" id="NUj-iu-jwg"/>
+                            <constraint firstItem="1sf-lk-WSi" firstAttribute="top" secondItem="Epm-hA-TD3" secondAttribute="bottom" id="hYR-6k-HHh"/>
+                            <constraint firstAttribute="bottom" secondItem="1sf-lk-WSi" secondAttribute="bottom" id="wHl-2i-Y6X"/>
+                        </constraints>
                         <viewLayoutGuide key="safeArea" id="Kqo-1e-6UR"/>
                     </view>
                     <connections>

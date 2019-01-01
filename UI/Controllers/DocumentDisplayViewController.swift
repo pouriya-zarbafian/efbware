@@ -20,6 +20,8 @@ class DocumentDisplayViewController: UIViewController {
         
         // Do any additional setup after loading the view.
         if let docUrl = documentUrl {
+            
+            pdfViewerOutlet.autoScales = true
             pdfViewerOutlet.document = PDFDocument(url: docUrl)
             LOGGER.debug(msg: "viewDidLoad, documentUrl=\(String(describing: documentUrl))")
         }
